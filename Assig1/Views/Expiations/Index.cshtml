@@ -4,6 +4,14 @@
     <h2>Expiations Index</h2>
 </div>
 
+<form asp-controller="Expiations" asp-action="Index" method="post">
+    <div class="form-group">
+        <label for="searchBox">Search:</label>
+        <input type="text" id="searchBox" name="searchText" class="form-control" maxlength="100" placeholder="Search for expiation categories" title="Search" value="@ViewBag.SearchText"/>
+        <button type="submit" class="btn btn-primary mt-2">Search</button>
+    </div>
+</form>
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>

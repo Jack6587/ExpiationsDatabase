@@ -25,6 +25,8 @@ namespace Assig1.Controllers
                     .Where(ec => ec.CategoryName.Contains(searchText));
             }
 
+            var expiationCategoriesList = expiationCategoriesContext.ToList();
+            ViewBag.ItemCount = expiationCategoriesList.Count;
             ViewBag.SearchText = searchText;
 
             return View(expiationCategoriesContext);

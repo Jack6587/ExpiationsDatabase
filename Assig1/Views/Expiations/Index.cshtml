@@ -17,11 +17,22 @@
 </p>
 
 <h3>Expiation Categories</h3>
-<ul>
+@if(ViewBag.ItemCount > 0)
+{
+    <p>Number of items found: @ViewBag.ItemCount</p>
+}
+@if (!Model.Any())
+{
+    <p>No items found.</p>
+}
+else
+{
+    <ul>
         @foreach (var category in Model)
         {
             <li>
                 @category.CategoryName
             </li>
         }
-</ul>
+    </ul>
+}

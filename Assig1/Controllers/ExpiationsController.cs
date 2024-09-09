@@ -1,5 +1,6 @@
 ﻿using Assig1.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assig1.Controllers
 {
@@ -12,11 +13,21 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchText)
         {
-            var expiationCategores = _context.ExpiationCategories.ToList();
+            var expiationCategoriesContext = _context.ExpiationCategories
+                .OrderBy(ec => ec.CategoryName)
+                .AsQueryable();
 
-            return View(expiationCategores);
+            if(!string.IsNullOrWhiteSpace(searchText))
+            {
+                expiationCategoriesContext = expiationCategoriesContext
+                    .Where(ec => ec.CategoryName.Contains(searchText));
+            }
+
+            ViewBag.SearchText = searchText;
+
+            return View(expiationCategoriesContext);
         }
     }
 }

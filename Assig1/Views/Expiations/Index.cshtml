@@ -6,8 +6,17 @@
 
 <form asp-controller="Expiations" asp-action="Index" method="post">
     <div class="form-group">
-        <label for="searchBox">Search:</label>
-        <input type="text" id="searchBox" name="searchText" class="form-control" maxlength="100" placeholder="Search for expiation categories" title="Search" value="@ViewBag.SearchText"/>
+        <label for="categoryDropdown">Category:</label>
+        <select id="categoryDropdown" name="selectedCategory" class="form-control">
+            <option value="">Select a category</option>
+            @foreach(var category in ViewBag.Categories as IEnumerable<Assig1.Models.ExpiationCategory>)
+            {
+                <option value="@category.CategoryId"
+                    @if (category.CategoryId == ViewBag.SelectedCategoryId) { <text>selected</text>  })>
+                    @category.CategoryName
+                </option>
+            }
+        </select>        
         <button type="submit" class="btn btn-primary mt-2">Search</button>
     </div>
 </form>
@@ -19,14 +28,6 @@
 <h3>Expiation Categories</h3>
 @if(ViewBag.ItemCount > 0)
 {
-    <p>Number of items found: @ViewBag.ItemCount</p>
-}
-@if (!Model.Any())
-{
-    <p>No items found.</p>
-}
-else
-{
     <ul>
         @foreach (var category in Model)
         {
@@ -35,4 +36,8 @@ else
             </li>
         }
     </ul>
+}
+else
+{
+    <p>No items found.</p>
 }

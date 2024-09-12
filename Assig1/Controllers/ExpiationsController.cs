@@ -13,10 +13,13 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string searchText)
+        public IActionResult Index(string searchText, int? selectedCategory)
         {
+            ViewBag.Categories = _context.ExpiationCategories
+                .OrderBy(ec => ec.CategoryName).ToList();
+            ViewBag.SelectedCategoryId = selectedCategory;
+
             var expiationCategoriesContext = _context.ExpiationCategories
-                .OrderBy(ec => ec.CategoryName)
                 .AsQueryable();
 
             if(!string.IsNullOrWhiteSpace(searchText))
@@ -25,11 +28,17 @@ namespace Assig1.Controllers
                     .Where(ec => ec.CategoryName.Contains(searchText));
             }
 
+            if (selectedCategory.HasValue)
+            {
+                expiationCategoriesContext = expiationCategoriesContext
+                    .Where(ec => ec.CategoryId == selectedCategory.Value);
+            }
+
             var expiationCategoriesList = expiationCategoriesContext.ToList();
             ViewBag.ItemCount = expiationCategoriesList.Count;
             ViewBag.SearchText = searchText;
 
-            return View(expiationCategoriesContext);
+            return View(expiationCategoriesList);
         }
     }
 }

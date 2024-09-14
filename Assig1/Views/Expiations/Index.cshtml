@@ -5,24 +5,16 @@
 </div>
 
 <form asp-controller="Expiations" asp-action="Index" method="get">
-    <div class="form-group">
-        <label for="categoryDropdown">Category:</label>
-        <select id="categoryDropdown" name="SelectedCategoryId" class="form-control">
-            <option value="">Select a category</option>
-            @foreach(var category in Model.Categories)
-            {
-                <option value="@category.CategoryId"
-                    @(category.CategoryId == Model.SelectedCategoryId ? "selected" : "")>
-                    @category.CategoryName
-                </option>
-            }
-        </select>        
+    <div action="form-group">
+        <label for="SearchText">Search:</label>
+        <input asp-for="SearchText" class="form-control" placeholder="Enter category name" />
     </div>
 
-    <div action="form-group mt-2">
-        <label for="searchText">Search:</label>
-        <input type="text" id="searchText" name="SearchText" class="form-control"
-            value="@Model.SearchText" placeholder="Enter category name" />
+    <div class="form-group mt-2">
+        <label asp-for="SelectedCategoryId">Category:</label>
+        <select asp-for="SelectedCategoryId" asp-items="Model.Categories.Select(c => new SelectListItem { Value = c.CategoryId.ToString(), Text = c.CategoryName })" class="form-control">
+            <option value="">Select a category</option>
+        </select>
     </div>
 
     <button type="submit" class="btn btn-primary mt-2">Search</button>
@@ -33,18 +25,26 @@
 </p>
 
 <h3>Categories</h3>
-@if(Model.Categories.Any())
+@if (!string.IsNullOrEmpty(Model.SearchText))
 {
-    <ul>
-        @foreach (var category in Model.Categories)
-        {
-            <li>
-                @category.CategoryName - @category.Description
-            </li>
-        }
-    </ul>
+    @if (Model.Categories.Any())
+    {
+        <h3>Number of records: @Model.Categories.Count()</h3>
+        <ul>
+            @foreach (var category in Model.Categories)
+            {
+                <li>
+                    @category.CategoryName - @category.Description
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No categories found.</p>
+    }
 }
 else
 {
-    <p>No categories found.</p>
+    <p>Please enter a category name to search.</p>
 }

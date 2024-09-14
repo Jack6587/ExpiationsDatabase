@@ -1,4 +1,5 @@
 ﻿using Assig1.Data;
+using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,32 +14,24 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string searchText, int? selectedCategory)
+        public IActionResult Index(ExpiationSearchViewModel vm)
         {
-            ViewBag.Categories = _context.ExpiationCategories
-                .OrderBy(ec => ec.CategoryName).ToList();
-            ViewBag.SelectedCategoryId = selectedCategory;
+            vm.Categories = _context.ExpiationCategories
+                .OrderBy(c => c.CategoryName)
+                .ToList();
 
-            var expiationCategoriesContext = _context.ExpiationCategories
+            var categoriesQuery = _context.ExpiationCategories
                 .AsQueryable();
 
-            if(!string.IsNullOrWhiteSpace(searchText))
+            if(!string.IsNullOrWhiteSpace(vm.SearchText))
             {
-                expiationCategoriesContext = expiationCategoriesContext
-                    .Where(ec => ec.CategoryName.Contains(searchText));
+                categoriesQuery = categoriesQuery
+                    .Where(ec => ec.CategoryName.Contains(vm.SearchText));
             }
 
-            if (selectedCategory.HasValue)
-            {
-                expiationCategoriesContext = expiationCategoriesContext
-                    .Where(ec => ec.CategoryId == selectedCategory.Value);
-            }
+            vm.Categories = categoriesQuery.ToList();
 
-            var expiationCategoriesList = expiationCategoriesContext.ToList();
-            ViewBag.ItemCount = expiationCategoriesList.Count;
-            ViewBag.SearchText = searchText;
-
-            return View(expiationCategoriesList);
+            return View(vm);
         }
     }
 }

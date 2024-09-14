@@ -9,6 +9,5 @@ namespace Assig1.ViewModels
         public string SearchText { get; set; }
         public int? SelectedCategoryId { get; set; }
         public IEnumerable<ExpiationCategory> Categories { get; set; }
-        public IEnumerable<Expiation> Expiations { get; set; }
     }
 }

@@ -1,43 +1,50 @@
-﻿@model IEnumerable<Assig1.Models.ExpiationCategory>
+﻿@model Assig1.ViewModels.ExpiationSearchViewModel
 
 <div class="text-dark bg-gradient bg-warning p-2 my-2 border rounded">
-    <h2>Expiations Index</h2>
+    <h2>Expiations Categories Index</h2>
 </div>
 
-<form asp-controller="Expiations" asp-action="Index" method="post">
+<form asp-controller="Expiations" asp-action="Index" method="get">
     <div class="form-group">
         <label for="categoryDropdown">Category:</label>
-        <select id="categoryDropdown" name="selectedCategory" class="form-control">
+        <select id="categoryDropdown" name="SelectedCategoryId" class="form-control">
             <option value="">Select a category</option>
-            @foreach(var category in ViewBag.Categories as IEnumerable<Assig1.Models.ExpiationCategory>)
+            @foreach(var category in Model.Categories)
             {
                 <option value="@category.CategoryId"
-                    @if (category.CategoryId == ViewBag.SelectedCategoryId) { <text>selected</text>  })>
+                    @(category.CategoryId == Model.SelectedCategoryId ? "selected" : "")>
                     @category.CategoryName
                 </option>
             }
         </select>        
-        <button type="submit" class="btn btn-primary mt-2">Search</button>
     </div>
+
+    <div action="form-group mt-2">
+        <label for="searchText">Search:</label>
+        <input type="text" id="searchText" name="SearchText" class="form-control"
+            value="@Model.SearchText" placeholder="Enter category name" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
 </form>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Category</a>
 </p>
 
-<h3>Expiation Categories</h3>
-@if(ViewBag.ItemCount > 0)
+<h3>Categories</h3>
+@if(Model.Categories.Any())
 {
     <ul>
-        @foreach (var category in Model)
+        @foreach (var category in Model.Categories)
         {
             <li>
-                @category.CategoryName
+                @category.CategoryName - @category.Description
             </li>
         }
     </ul>
 }
 else
 {
-    <p>No items found.</p>
+    <p>No categories found.</p>
 }

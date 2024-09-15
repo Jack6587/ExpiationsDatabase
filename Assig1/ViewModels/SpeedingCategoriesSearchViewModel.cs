@@ -7,7 +7,7 @@ namespace Assig1.ViewModels
     {
         [Required(ErrorMessage = "You must provide a search term")]
         public string SearchText { get; set; }
-        public int? SelectedCategoryId { get; set; }
+        public string? SpeedCode { get; set; }
         public IEnumerable<SpeedingCategory> SpeedingCategories { get; set; }
         public IEnumerable<Offence> Offences {  get; set; }
     }

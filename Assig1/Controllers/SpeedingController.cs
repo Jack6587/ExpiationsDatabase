@@ -20,6 +20,22 @@ namespace Assig1.Controllers
                 .OrderBy(sc => sc.SpeedDescription)
                 .ToList();
 
+            var offencesQuery = _context.Offences.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(vm.SearchText))
+            {
+                offencesQuery = offencesQuery
+                    .Where(o => o.Description.Contains(vm.SearchText));
+            }
+
+            if (!string.IsNullOrWhiteSpace(vm.SpeedCode))
+            {
+                var offenceCodes = _context.SpeedingCategories
+                    .Where(sc => sc.SpeedCode == vm.SpeedCode)
+                    .Select(sc => sc.OffenceCode)
+                    .ToList();
+            }
+
             return View(vm);
         }
     }

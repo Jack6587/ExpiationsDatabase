@@ -34,7 +34,12 @@ namespace Assig1.Controllers
                     .Where(sc => sc.SpeedCode == vm.SpeedCode)
                     .Select(sc => sc.OffenceCode)
                     .ToList();
+                
+                offencesQuery = offencesQuery
+                    .Where(o => offenceCodes.Contains(o.OffenceCode));
             }
+
+            vm.Offences = offencesQuery.ToList();
 
             return View(vm);
         }

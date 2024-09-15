@@ -13,7 +13,7 @@
     <div class="form-group mt-2">
         <label asp-for="SpeedCode">Category:</label>
         <select asp-for="SpeedCode" asp-items="Model.SpeedingCategories.Select(c => new SelectListItem { Value = c.SpeedCode, Text = c.SpeedDescription })" class="form-control">
-            <option value="">Select a speed code</option>
+            <option value="">Select a speed type</option>
         </select>
     </div>
 

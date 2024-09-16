@@ -60,12 +60,20 @@ namespace Assig1.Controllers
                     o.Description,
                     o.ExpiationFee,
                     o.DemeritPoints,
-                    SpeedCode = _context.SpeedingCategories
+                    SpeedCodeCategory = _context.SpeedingCategories
                         .Where(sc => sc.OffenceCode == o.OffenceCode)
                         .Select(sc => sc.SpeedCode)
                         .FirstOrDefault()
                 })
                 .FirstOrDefaultAsync();
+
+            var totalOffences = await _context.Offences
+                .Join(_context.SpeedingCategories,
+                    o => o.OffenceCode,
+                    sc => sc.OffenceCode,
+                    (o, sc) => new { o, sc })
+                .Where(join => join.sc.SpeedCode == offence.SpeedCodeCategory)
+                .CountAsync();
 
             return View(vm);
         }

@@ -48,5 +48,21 @@ namespace Assig1.Controllers
 
             return View(vm);
         }
+
+        public async Task<IActionResult> Details(string offenceCode)
+        {
+            var offence = await _context.Offences
+                .Where(o => o.OffenceCode == offenceCode)
+                .Select(o => new Speeding_SpeedingDetail
+                {
+                    OffenceCode = o.OffenceCode,
+                    Description = o.Description,
+                    ExpiationFee = o.ExpiationFee,
+                    DemeritPoints = o.DemeritPoints
+                })
+                .FirstOrDefaultAsync();
+            
+            return View(offence);
+        }
     }
 }

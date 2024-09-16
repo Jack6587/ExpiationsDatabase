@@ -4,7 +4,7 @@
     {
         public string OffenceCode { get; set; }
         public string Description { get; set; }
-        public int ExpiationFee { get; set; }
-        public int demeritPoints { get; set; }
+        public int? ExpiationFee { get; set; }
+        public int? DemeritPoints { get; set; }
     }
 }

@@ -49,6 +49,7 @@ namespace Assig1.Controllers
             return View(vm);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Details(string offenceCode)
         {
             var offence = await _context.Offences
@@ -61,7 +62,7 @@ namespace Assig1.Controllers
                     DemeritPoints = o.DemeritPoints
                 })
                 .FirstOrDefaultAsync();
-            
+
             return View(offence);
         }
     }

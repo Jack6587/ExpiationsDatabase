@@ -9,5 +9,6 @@
         public int TotalOffences { get; set; }
         public double? AverageDemeritPoints { get; set; }
         public double? AverageFeePaid { get; set; }
+        public int? HighestFeePaid { get; set; }
     }
 }

@@ -6,5 +6,6 @@
         public string Description { get; set; }
         public int? ExpiationFee { get; set; }
         public int? DemeritPoints { get; set; }
+        public int TotalOffences { get; set; }
     }
 }

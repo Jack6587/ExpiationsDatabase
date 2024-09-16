@@ -59,7 +59,8 @@ namespace Assig1.Controllers
                     OffenceCode = o.OffenceCode,
                     Description = o.Description,
                     ExpiationFee = o.ExpiationFee,
-                    DemeritPoints = o.DemeritPoints
+                    DemeritPoints = o.DemeritPoints,
+                    TotalOffences = _context.Offences.Count()
                 })
                 .FirstOrDefaultAsync();
 

@@ -8,5 +8,6 @@
         public int? DemeritPoints { get; set; }
         public int TotalOffences { get; set; }
         public double? AverageDemeritPoints { get; set; }
+        public double? AverageFeePaid { get; set; }
     }
 }

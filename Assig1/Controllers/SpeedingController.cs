@@ -83,12 +83,21 @@ namespace Assig1.Controllers
                 .Where(join => join.sc.SpeedCode == offence.SpeedCodeCategory)
                 .AverageAsync(join => join.o.DemeritPoints);
 
+            var averageFee = await _context.Offences
+                .Join(_context.SpeedingCategories,
+                    o => o.OffenceCode,
+                    sc => sc.OffenceCode,
+                    (o, sc) => new { o, sc })
+                .Where(join => join.sc.SpeedCode == offence.SpeedCodeCategory)
+                .AverageAsync(join => join.o.TotalFee);
+
             var vm = new Speeding_SpeedingDetail
             {
                 OffenceCode = offence.OffenceCode,
                 Description = offence.Description,
                 ExpiationFee = offence.ExpiationFee,
                 DemeritPoints = offence.DemeritPoints,
+                AverageFeePaid = averageFee,
                 TotalOffences = totalOffences,
                 AverageDemeritPoints = averageDemerit
             };

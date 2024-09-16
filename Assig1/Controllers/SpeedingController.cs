@@ -75,6 +75,15 @@ namespace Assig1.Controllers
                 .Where(join => join.sc.SpeedCode == offence.SpeedCodeCategory)
                 .CountAsync();
 
+            var vm = new Speeding_SpeedingDetail
+            {
+                OffenceCode = offence.OffenceCode,
+                Description = offence.Description,
+                ExpiationFee = offence.ExpiationFee,
+                DemeritPoints = offence.DemeritPoints,
+                TotalOffences = totalOffences
+            };
+
             return View(vm);
         }
     }

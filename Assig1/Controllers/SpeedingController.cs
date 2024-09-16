@@ -17,7 +17,7 @@ namespace Assig1.Controllers
         public IActionResult Index(SpeedingCategoriesSearchViewModel vm)
         {
             var categories = _context.SpeedingCategories
-                .OrderBy(sc => sc.SpeedDescription)
+                .OrderBy(sc => sc.SpeedCode)
                 .ToList();
 
             vm.SpeedingCategories = categories

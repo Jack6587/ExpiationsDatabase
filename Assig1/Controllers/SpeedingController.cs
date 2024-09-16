@@ -54,17 +54,20 @@ namespace Assig1.Controllers
         {
             var offence = await _context.Offences
                 .Where(o => o.OffenceCode == offenceCode)
-                .Select(o => new Speeding_SpeedingDetail
+                .Select(o => new
                 {
-                    OffenceCode = o.OffenceCode,
-                    Description = o.Description,
-                    ExpiationFee = o.ExpiationFee,
-                    DemeritPoints = o.DemeritPoints,
-                    TotalOffences = _context.Offences.Count()
+                    o.OffenceCode,
+                    o.Description,
+                    o.ExpiationFee,
+                    o.DemeritPoints,
+                    SpeedCode = _context.SpeedingCategories
+                        .Where(sc => sc.OffenceCode == o.OffenceCode)
+                        .Select(sc => sc.SpeedCode)
+                        .FirstOrDefault()
                 })
                 .FirstOrDefaultAsync();
 
-            return View(offence);
+            return View(vm);
         }
     }
 }

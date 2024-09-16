@@ -7,6 +7,6 @@
         public int? ExpiationFee { get; set; }
         public int? DemeritPoints { get; set; }
         public int TotalOffences { get; set; }
-        public double AverageDemeritPoints { get; set; }
+        public double? AverageDemeritPoints { get; set; }
     }
 }

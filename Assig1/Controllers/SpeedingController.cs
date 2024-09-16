@@ -81,7 +81,7 @@ namespace Assig1.Controllers
                     sc => sc.OffenceCode,
                     (o, sc) => new { o, sc })
                 .Where(join => join.sc.SpeedCode == offence.SpeedCodeCategory)
-                .AverageAsync();
+                .AverageAsync(join => join.o.DemeritPoints);
 
             var vm = new Speeding_SpeedingDetail
             {

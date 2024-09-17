@@ -1,4 +1,6 @@
-﻿<h2>Data Breakdown</h2>
+﻿@model Assig1.ViewModels.DataBreakdownViewModel
+
+<h2>Data Breakdown</h2>
 
 <table class="table">
     <thead>
@@ -10,14 +12,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.OffenceCode</td>
-                <td>@item.Description</td>
-                <td>@item.IncidentStartDate</td>
-                <td>@item.TotalFeeAmt</td>
-            </tr>
-        }
+        <tr>
+            <td>@Model.OffenceCode</td>
+            <td>@Model.Description</td>
+            <td>@Model.IncidentStartDate</td>
+            <td>@Model.TotalFeeAmt</td>
+        </tr>
     </tbody>
 </table>

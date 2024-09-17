@@ -126,15 +126,16 @@ namespace Assig1.Controllers
                         from o in _context.Offences
                         join e in _context.Expiations
                         on o.OffenceCode equals e.OffenceCode
-                        select new
+                        where o.OffenceCode == offenceCode
+                        select new DataBreakdownViewModel
                         {
-                            o.OffenceCode,
-                            o.Description,
-                            e.IncidentStartDate,
-                            e.TotalFeeAmt
-                        });
+                            OffenceCode = o.OffenceCode,
+                            Description = o.Description,
+                            IncidentStartDate = e.IncidentStartDate,
+                            TotalFeeAmt = e.TotalFeeAmt
+                        }).FirstOrDefaultAsync();
 
-            return View(await query.ToListAsync());
+            return View(await query);
         }
     }
 }

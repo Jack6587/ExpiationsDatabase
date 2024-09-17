@@ -124,8 +124,8 @@ namespace Assig1.Controllers
         {
             var query = (
                         from o in _context.Offences
-                        join e in _context.Expiations
-                        on o.OffenceCode equals e.OffenceCode
+                        join e in _context.Expiations on o.OffenceCode equals e.OffenceCode
+                        join sc in _context.SpeedingCategories on o.OffenceCode equals sc.OffenceCode
                         where o.OffenceCode == offenceCode
                         select new DataBreakdownViewModel
                         {

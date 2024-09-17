@@ -1,0 +1,23 @@
+﻿<h2>Data Breakdown</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Offence Code</th>
+            <th>Description</th>
+            <th>Incident Start Date</th>
+            <th>Total Fee Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OffenceCode</td>
+                <td>@item.Description</td>
+                <td>@item.IncidentStartDate</td>
+                <td>@item.TotalFeeAmt</td>
+            </tr>
+        }
+    </tbody>
+</table>

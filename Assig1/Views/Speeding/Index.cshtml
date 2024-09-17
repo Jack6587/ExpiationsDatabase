@@ -30,6 +30,7 @@
             <li>
                 @offence.Description - @offence.OffenceCode
                 <a href="@Url.Action("Details", "Speeding", new { offenceCode = offence.OffenceCode })">View Details</a>
+                <a href="@Url.Action("DataBreakdown", "Speeding", new { offenceCode = offence.OffenceCode })">Data Breakdown</a>
             </li>
         }
     </ul>

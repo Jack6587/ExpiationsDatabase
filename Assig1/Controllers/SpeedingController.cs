@@ -120,7 +120,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DataBreakdown (string searchDescription)
+        public async Task<IActionResult> DataBreakdown (string offenceCode)
         {
             var query = (
                         from o in _context.Offences

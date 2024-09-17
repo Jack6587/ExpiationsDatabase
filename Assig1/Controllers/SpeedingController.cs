@@ -120,13 +120,13 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DataBreakdown(string speedDescription)
+        public async Task<IActionResult> DataBreakdown(string speedCode)
         {
             var query = await (
                         from o in _context.Offences
                         join e in _context.Expiations on o.OffenceCode equals e.OffenceCode
                         join sc in _context.SpeedingCategories on o.OffenceCode equals sc.OffenceCode
-                        where sc.SpeedDescription == speedDescription
+                        where sc.SpeedCode == speedCode
                         group new { o, e, sc } by new { o.OffenceCode, o.Description, sc.SpeedDescription } into g
                         select new DataBreakdownViewModel
                         {
@@ -135,7 +135,8 @@ namespace Assig1.Controllers
                             SpeedDescription = g.Key.SpeedDescription,
                             TotalFeeAmt = g.Sum(x => x.e.TotalFeeAmt),
                             OffenceCount = g.Count()
-                        }).ToListAsync();
+                        }).OrderByDescending(d => d.OffenceCount)
+                        .ToListAsync();
 
             if (query == null)
             {

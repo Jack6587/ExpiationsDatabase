@@ -27,7 +27,7 @@
     {
         <li>
             @category.SpeedDescription - @category.SpeedCode
-            <a href="@Url.Action("DataBreakdown", "Speeding", new { speedDescription = category.SpeedDescription })">Data Breakdown</a>
+            <a href="@Url.Action("DataBreakdown", "Speeding", new { speedCode = category.SpeedCode })">Data Breakdown</a>
         </li>
     }
 

@@ -122,7 +122,7 @@ namespace Assig1.Controllers
         [HttpGet]
         public async Task<IActionResult> DataBreakdown (string offenceCode)
         {
-            var query = (
+            var query = await (
                         from o in _context.Offences
                         join e in _context.Expiations on o.OffenceCode equals e.OffenceCode
                         join sc in _context.SpeedingCategories on o.OffenceCode equals sc.OffenceCode
@@ -132,10 +132,17 @@ namespace Assig1.Controllers
                             OffenceCode = o.OffenceCode,
                             Description = o.Description,
                             IncidentStartDate = e.IncidentStartDate,
-                            TotalFeeAmt = e.TotalFeeAmt
+                            TotalFeeAmt = e.TotalFeeAmt,
+                            SpeedCode = sc.SpeedCode,
+                            SpeedDescription = sc.SpeedDescription
                         }).FirstOrDefaultAsync();
 
-            return View(await query);
+            if(query == null)
+            {
+                return NotFound();
+            }
+
+            return View(query);
         }
     }
 }

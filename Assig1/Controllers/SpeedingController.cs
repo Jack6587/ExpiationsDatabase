@@ -67,6 +67,11 @@ namespace Assig1.Controllers
                 })
                 .FirstOrDefaultAsync();
 
+            if(offence == null)
+            {
+                return NotFound();
+            }
+
             var totalOffences = await _context.Offences
                 .Join(_context.SpeedingCategories,
                     o => o.OffenceCode,
@@ -112,6 +117,24 @@ namespace Assig1.Controllers
             };
 
             return View(vm);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DataBreakdown (string searchDescription)
+        {
+            var query = (
+                        from o in _context.Offences
+                        join e in _context.Expiations
+                        on o.OffenceCode equals e.OffenceCode
+                        select new
+                        {
+                            o.OffenceCode,
+                            o.Description,
+                            e.IncidentStartDate,
+                            e.TotalFeeAmt
+                        });
+
+            return View(await query.ToListAsync());
         }
     }
 }

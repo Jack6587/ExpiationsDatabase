@@ -1,26 +1,33 @@
-﻿@model Assig1.ViewModels.DataBreakdownViewModel
+﻿@model IEnumerable<Assig1.ViewModels.DataBreakdownViewModel>
 
 <h2>Data Breakdown</h2>
 
-<table class="table">
+@if(Model != null && Model.Any())
+{
+    <table class="table">
     <thead>
         <tr>
             <th>Offence Code</th>
             <th>Description</th>
-            <th>Incident Start Date</th>
-            <th>Total Fee Amount</th>
-            <th>Speed Code</th>
             <th>Speed Description</th>
+            <th>Total Fee Amount</th>
+            <th>Offence Occurence</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>@Model.OffenceCode</td>
-            <td>@Model.Description</td>
-            <td>@Model.IncidentStartDate</td>
-            <td>@Model.TotalFeeAmt</td>
-            <td>@Model.SpeedCode</td>
-            <td>@Model.SpeedDescription</td>
-        </tr>
-    </tbody>
-</table>
+            @foreach(var item in Model)
+            {
+            <tr>
+                <td>@item.OffenceCode</td>
+                <td>@item.Description</td>
+                <td>@item.SpeedDescription</td>
+                <td>@item.TotalFeeAmt</td>
+                <td>@item.OffenceCount</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else {
+    <p>No data available for the selected speed type.</p>
+}

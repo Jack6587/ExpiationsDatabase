@@ -23,6 +23,14 @@
 <h3>Offence</h3>
 @if (Model.Offences != null && Model.Offences.Any())
 {
+    @foreach(var category in Model.SpeedingCategories)
+    {
+        <li>
+            @category.SpeedDescription - @category.SpeedCode
+            <a href="@Url.Action("DataBreakdown", "Speeding", new { speedDescription = category.SpeedDescription })">Data Breakdown</a>
+        </li>
+    }
+
     <h3>Number of records: @Model.Offences.Count()</h3>
     <ul>
         @foreach (var offence in Model.Offences)
@@ -30,7 +38,6 @@
             <li>
                 @offence.Description - @offence.OffenceCode
                 <a href="@Url.Action("Details", "Speeding", new { offenceCode = offence.OffenceCode })">View Details</a>
-                <a href="@Url.Action("DataBreakdown", "Speeding", new { offenceCode = offence.OffenceCode })">Data Breakdown</a>
             </li>
         }
     </ul>

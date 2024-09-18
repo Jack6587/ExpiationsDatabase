@@ -169,6 +169,11 @@ namespace Assig1.Controllers
                     e.TotalFeeAmt,
                     e.IncidentStartDate
                 }).ToListAsync();
+
+            if (detailQuery == null || !detailQuery.Any())
+
+
+            return View();
         }
 
     }

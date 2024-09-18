@@ -154,5 +154,22 @@ namespace Assig1.Controllers
             return View(query);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DataDetails(string offenceCode)
+        {
+            var detailQuery = await (
+                from o in _context.Offences
+                join e in _context.Expiations on o.OffenceCode equals e.OffenceCode
+                where o.OffenceCode == offenceCode
+                select new
+                {
+                    o.OffenceCode,
+                    o.Description,
+                    e.ExpId,
+                    e.TotalFeeAmt,
+                    e.IncidentStartDate
+                }).ToListAsync();
+        }
+
     }
 }

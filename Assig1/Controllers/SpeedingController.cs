@@ -120,7 +120,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DataBreakdown(string speedCode)
+        public async Task<IActionResult> DataBreakdown(string speedCode, string sortBy = "OffenceCode")
         {
             var query = await (
                         from o in _context.Offences
@@ -133,10 +133,17 @@ namespace Assig1.Controllers
                             OffenceCode = g.Key.OffenceCode,
                             Description = g.Key.Description,
                             SpeedDescription = g.Key.SpeedDescription,
-                            TotalFeeAmt = g.Sum(x => x.e.TotalFeeAmt),
+                            AverageFeeAmt = g.Average(x => x.e.TotalFeeAmt),
                             OffenceCount = g.Count()
                         }).OrderByDescending(d => d.OffenceCount)
                         .ToListAsync();
+
+            if(sortBy == "AverageFeeAmt")
+            {
+                query = query.OrderByDescending(d => d.AverageFeeAmt).ToList();
+            } else if (sortBy == "OffenceCount") {
+                query = query.OrderByDescending(d => d.OffenceCount).ToList();
+            }
 
             if (query == null)
             {

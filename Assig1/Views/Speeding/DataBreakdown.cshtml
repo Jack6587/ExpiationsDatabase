@@ -3,6 +3,7 @@
 <h2>Data Breakdown</h2>
 
 <form method="get">
+    <input type="hidden" name="speedCode" value="@ViewContext.HttpContext.Request.Query["speedCode"]" />
     <label for="sortBy">Sort By: </label>
     <select name="sortBy" id="sortBy">
         <option value="OffenceCount">Offence Occurence</option>
@@ -30,7 +31,7 @@
                 <td>@item.OffenceCode</td>
                 <td>@item.Description</td>
                 <td>@item.SpeedDescription</td>
-                <td>@item.AverageFeeAmt</td>
+                <td>@item.AverageFeeAmt?.ToString("F2")</td>
                 <td>@item.OffenceCount</td>
             </tr>
             }

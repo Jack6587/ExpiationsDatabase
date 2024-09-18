@@ -1,4 +1,5 @@
 ﻿using Assig1.Data;
+using Assig1.Models;
 using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -142,7 +143,8 @@ namespace Assig1.Controllers
             {
                 query = query.OrderByDescending(d => d.AverageFeeAmt).ToList();
             } 
-            else if (sortBy == "OffenceCount") {
+            else if (sortBy == "OffenceCount") 
+            {
                 query = query.OrderByDescending(d => d.OffenceCount).ToList();
             }
 
@@ -171,7 +173,21 @@ namespace Assig1.Controllers
                 }).ToListAsync();
 
             if (detailQuery == null || !detailQuery.Any())
+            {
+                return NotFound();
+            }
 
+            var vm = new Data_DataDetail
+            {
+                OffenceCode = detailQuery.First().OffenceCode,
+                Description = detailQuery.First().Description,
+                Expiations = detailQuery.Select(d => new Expiation
+                {
+                   ExpId = d.ExpId,
+                   TotalFeeAmt = d.TotalFeeAmt,
+                   IncidentStartDate = d.IncidentStartDate
+                }).ToList()
+            };
 
             return View();
         }

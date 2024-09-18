@@ -2,6 +2,15 @@
 
 <h2>Data Breakdown</h2>
 
+<form method="get">
+    <label for="sortBy">Sort By: </label>
+    <select name="sortBy" id="sortBy">
+        <option value="OffenceCount">Offence Occurence</option>
+        <option value="AverageFeeAmt">Average Fee Amount</option>
+    </select>
+    <button type="submit">Sort</button>
+</form>
+
 @if(Model != null && Model.Any())
 {
     <table class="table">

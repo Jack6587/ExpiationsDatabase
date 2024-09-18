@@ -141,7 +141,8 @@ namespace Assig1.Controllers
             if(sortBy == "AverageFeeAmt")
             {
                 query = query.OrderByDescending(d => d.AverageFeeAmt).ToList();
-            } else if (sortBy == "OffenceCount") {
+            } 
+            else if (sortBy == "OffenceCount") {
                 query = query.OrderByDescending(d => d.OffenceCount).ToList();
             }
 

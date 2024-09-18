@@ -1,9 +1,24 @@
 ﻿@model Assig1.ViewModels.Data_DataDetail
 
-<h2>Details for Offence Code: @Model.OffenceCode</h2>
-<p>Description: @Model.Description</p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Offence Code: @Model.OffenceCode</h5>
+                <p class="card-text">Description: @Model.Description</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Total Expiations</h5>
+                <p class="card-text">@Model.TotalExpiations</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h3>Expiations</h3>
 <table class="table">
     <thead>
         <tr>

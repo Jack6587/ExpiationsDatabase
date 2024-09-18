@@ -194,6 +194,9 @@ namespace Assig1.Controllers
                 }).ToList()
             };
 
+            vm.TotalExpiations = vm.Expiations.Count();
+            vm.TotalFeePaid = vm.Expiations.Sum(e => e.TotalFeeAmt);
+
             return View(vm);
         }
 

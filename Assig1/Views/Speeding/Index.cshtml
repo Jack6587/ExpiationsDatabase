@@ -21,7 +21,15 @@
 </form>
 
 <h3>Offence</h3>
-@if (Model.Offences != null && Model.Offences.Any())
+@if (Model.Offences == null)
+{
+    <p>Search for an offence!</p>
+}
+else if (!Model.Offences.Any())
+{
+    <p>No offences found.</p>
+}
+else
 {
     @foreach(var category in Model.SpeedingCategories)
     {
@@ -41,8 +49,4 @@
             </li>
         }
     </ul>
-}
-else
-{
-    <p>No offences found.</p>
 }

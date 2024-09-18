@@ -26,26 +26,29 @@ namespace Assig1.Controllers
                 .Select(group => group.First())
                 .ToList();
 
-            var offencesQuery = _context.Offences.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(vm.SearchText))
+            if(!string.IsNullOrWhiteSpace(vm.SearchText) || !string.IsNullOrWhiteSpace(vm.SpeedCode))
             {
-                offencesQuery = offencesQuery
-                    .Where(o => o.Description.Contains(vm.SearchText));
-            }
+                var offencesQuery = _context.Offences.AsQueryable();
 
-            if (!string.IsNullOrWhiteSpace(vm.SpeedCode))
-            {
-                var offenceCodes = _context.SpeedingCategories
-                    .Where(sc => sc.SpeedCode == vm.SpeedCode)
-                    .Select(sc => sc.OffenceCode)
-                    .ToList();
+                if (!string.IsNullOrWhiteSpace(vm.SearchText))
+                {
+                    offencesQuery = offencesQuery
+                        .Where(o => o.Description.Contains(vm.SearchText));
+                }
+
+                if (!string.IsNullOrWhiteSpace(vm.SpeedCode))
+                {
+                    var offenceCodes = _context.SpeedingCategories
+                        .Where(sc => sc.SpeedCode == vm.SpeedCode)
+                        .Select(sc => sc.OffenceCode)
+                        .ToList();
                 
-                offencesQuery = offencesQuery
-                    .Where(o => offenceCodes.Contains(o.OffenceCode));
-            }
+                    offencesQuery = offencesQuery
+                        .Where(o => offenceCodes.Contains(o.OffenceCode));
+                }
 
-            vm.Offences = offencesQuery.ToList();
+                vm.Offences = offencesQuery.ToList();
+            }
 
             return View(vm);
         }
@@ -169,7 +172,8 @@ namespace Assig1.Controllers
                     o.Description,
                     e.ExpId,
                     e.TotalFeeAmt,
-                    e.IncidentStartDate
+                    e.IncidentStartDate,
+                    e.IncidentStartTime
                 }).ToListAsync();
 
             if (detailQuery == null || !detailQuery.Any())
@@ -185,7 +189,8 @@ namespace Assig1.Controllers
                 {
                    ExpId = d.ExpId,
                    TotalFeeAmt = d.TotalFeeAmt,
-                   IncidentStartDate = d.IncidentStartDate
+                   IncidentStartDate = d.IncidentStartDate,
+                   IncidentStartTime = d.IncidentStartTime
                 }).ToList()
             };
 

@@ -33,8 +33,10 @@
                 <td>@item.SpeedDescription</td>
                 <td>@item.AverageFeeAmt?.ToString("F2")</td>
                 <td>@item.OffenceCount</td>
+                <td>
+                    <a href="@Url.Action("DataDetails", "Speeding", new { offenceCode = item.OffenceCode })">View Further Details</a>
+                </td>
             </tr>
-                <a href="@Url.Action("DataDetails", "Speeding", new { offenceCode = item.OffenceCode })">View Further Details</a>
             }
         </tbody>
     </table>

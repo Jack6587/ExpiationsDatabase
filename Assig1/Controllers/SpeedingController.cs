@@ -189,7 +189,7 @@ namespace Assig1.Controllers
                 }).ToList()
             };
 
-            return View();
+            return View(vm);
         }
 
     }

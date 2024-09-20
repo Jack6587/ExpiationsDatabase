@@ -181,6 +181,8 @@ namespace Assig1.Controllers
                 return NotFound();
             }
 
+            var totalOffenceCount = await _context.Expiations.CountAsync();
+
             var vm = new Data_DataDetail
             {
                 OffenceCode = detailQuery.First().OffenceCode,
@@ -194,7 +196,11 @@ namespace Assig1.Controllers
                 }).ToList()
             };
 
-            vm.TotalExpiations = vm.Expiations.Count();
+            var specificOffencesCount = vm.Expiations.Count();
+            double offenceFrequency;
+
+            vm.Frequency = offenceFrequency;
+            vm.TotalExpiations = specificOffencesCount;
             vm.TotalFeePaid = vm.Expiations.Sum(e => e.TotalFeeAmt);
 
             return View(vm);

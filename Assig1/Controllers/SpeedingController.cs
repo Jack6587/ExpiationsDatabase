@@ -197,7 +197,7 @@ namespace Assig1.Controllers
             };
 
             var specificOffencesCount = vm.Expiations.Count();
-            double offenceFrequency = (double)specificOffencesCount / totalOffenceCount;
+            double offenceFrequency = ((double)specificOffencesCount / totalOffenceCount) * 100;
 
             vm.Frequency = offenceFrequency;
             vm.TotalExpiations = specificOffencesCount;

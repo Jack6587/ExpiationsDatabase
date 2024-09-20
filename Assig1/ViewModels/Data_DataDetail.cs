@@ -9,5 +9,6 @@ namespace Assig1.ViewModels
         public IEnumerable<Expiation> Expiations { get; set; }
         public int TotalExpiations { get; set; }
         public int? TotalFeePaid { get; set; }
+        public double Frequency { get; set; }
     }
 }

@@ -1,12 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Assig1.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assig1.Controllers
 {
     public class ExpiationsController : Controller
     {
-        public IActionResult Index()
+        private readonly ExpiationsContext _context;
+
+        public ExpiationsController(ExpiationsContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            ViewBag.Title = "Expiations";
+            ViewBag.Active = "Expiations";
+
+            var expiations = await _context.Expiations
+                .OrderBy(e => e.TotalFeeAmt)
+                .Take(10)
+                .ToListAsync();
+
+            return View(expiations);
         }
     }
 }

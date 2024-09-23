@@ -6,12 +6,12 @@
 
 <form asp-controller="Speeding" asp-action="Index" method="get">
     <div action="form-group">
-        <label for="SearchText">Search:</label>
+        <label for="SearchText">Search by Offence Description:</label>
         <input asp-for="SearchText" class="form-control" placeholder="Enter offence description" />
     </div>
 
     <div class="form-group mt-2">
-        <label asp-for="SpeedCode">Category:</label>
+        <label asp-for="SpeedCode">Filter by Speed Code:</label>
         <select asp-for="SpeedCode" asp-items="Model.SpeedingCategories.Select(c => new SelectListItem { Value = c.SpeedCode, Text = c.SpeedDescription })" class="form-control">
             <option value="">All categories</option>
         </select>
@@ -31,7 +31,7 @@ else if (!Model.Offences.Any())
 }
 else
 {
-    @foreach(var category in Model.SpeedingCategories)
+    @foreach (var category in Model.SpeedingCategories)
     {
         <li>
             @category.SpeedDescription - @category.SpeedCode

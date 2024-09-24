@@ -28,18 +28,8 @@
         <li>Max Fine : @Model.MaxFine</li>
         <li>Average Fine : @Model.AverageFine</li>
     </ul>
-}
-@if (Model == null)
-{
-    <p>Search for an offence!</p>
-}
-else if (!Model.Any())
-{
-    <p>No offences found.</p>
-}
-else
-{
-    <h3>Number of records: @Model.Count()</h3>
+    
+    <h3>Number of records: @Model.Expiations.Count()</h3>
 
     <table class="table table-striped">
         <thead>
@@ -53,7 +43,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var expiation in Model)
+            @foreach (var expiation in Model.Expiations)
             {
                 <tr>
                     <td>@expiation.ExpId</td>
@@ -66,5 +56,8 @@ else
             }
         </tbody>
     </table>
-
+}
+else
+{
+    <p>Search for an offence!</p>
 }

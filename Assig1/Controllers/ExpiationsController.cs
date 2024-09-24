@@ -39,7 +39,7 @@ namespace Assig1.Controllers
 
                 vm.Expiations = expiations;
                 vm.TotalExpiations = expiations.Count;
-                vm.MaxSpeed = expiations.Min(e => e.VehicleSpeed);
+                vm.MaxSpeed = expiations.Max(e => e.VehicleSpeed);
                 vm.AverageSpeed = expiations.Average(e => e.VehicleSpeed);
                 vm.MaxBAC = expiations.Max(e => e.BacContentExp);
                 vm.MaxFine = expiations.Max(e => e.TotalFeeAmt);

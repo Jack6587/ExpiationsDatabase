@@ -1,78 +1,38 @@
-﻿@model IEnumerable<Assig1.Models.Expiation>
-
-@{
-    ViewData["Title"] = "Index";
-}
+﻿@model List<Assig1.Models.Expiation>
 
 <div class="text-dark bg-gradient bg-warning p-2 my-2 border rounded">
     <h2>Index</h2>
 </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ExpId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IncidentStartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IncidentStartTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IssueDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OffencePenaltyAmt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OffenceLevyAmt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalFeeAmt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OffenceCode)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExpId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IncidentStartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IncidentStartTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IssueDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OffencePenaltyAmt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OffenceLevyAmt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalFeeAmt)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OffenceCode)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ExpId">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<form method="get" asp-action="Index" asp-controller="Expiations">
+    <div class="form-group">
+        <label for="searchText">Search by LSA Code: </label>
+        <input type="text" id="searchText" name="searchText" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="offenceCode">Search by Offence Code: </label>
+        <input type="text" id="offenceCode" name="offenceCode" class="form-control" />
+    </div>
+    <button type="submit">Search</button>
+</form>
+
+<h3>Expiations</h3>
+@if (Model == null)
+{
+    <p>Search for an offence!</p>
+}
+else if (!Model.Any())
+{
+    <p>No offences found.</p>
+}
+else
+{
+    @foreach (var expiation in Model)
+    {
+        <li>
+            @expiation.LsaCode - @expiation.OffenceCode
+        </li>
+    }
+
+    <h3>Number of records: @Model.Count()</h3>
+}

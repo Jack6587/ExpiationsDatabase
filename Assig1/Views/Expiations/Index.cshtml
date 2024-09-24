@@ -1,17 +1,17 @@
 ﻿@model List<Assig1.Models.Expiation>
 
 <div class="text-dark bg-gradient bg-warning p-2 my-2 border rounded">
-    <h2>Index</h2>
+    <h2>Expiations Index</h2>
 </div>
 
 <form method="get" asp-action="Index" asp-controller="Expiations">
     <div class="form-group">
         <label for="searchText">Search by LSA Code: </label>
-        <input type="text" id="searchText" name="searchText" class="form-control" />
+        <input type="text" id="searchText" name="searchText" class="form-control" placeholder="Search LSA Codes..." />
     </div>
     <div class="form-group">
         <label for="offenceCode">Search by Offence Code: </label>
-        <input type="text" id="offenceCode" name="offenceCode" class="form-control" />
+        <input type="text" id="offenceCode" name="offenceCode" class="form-control" placeholder="Search Offence Codes..."/>
     </div>
     <button type="submit">Search</button>
 </form>
@@ -27,12 +27,32 @@ else if (!Model.Any())
 }
 else
 {
-    @foreach (var expiation in Model)
-    {
-        <li>
-            @expiation.LsaCode - @expiation.OffenceCode
-        </li>
-    }
-
     <h3>Number of records: @Model.Count()</h3>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Expiation ID</th>
+                <th>Total Fee</th>
+                <th>Incident Time</th>
+                <th>Incident Date</th>
+                <th>Vehicle Speed</th>
+                <th>LSA Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expiation in Model)
+            {
+                <tr>
+                    <td>@expiation.ExpId</td>
+                    <td>@expiation.TotalFeeAmt</td>
+                    <td>@expiation.IncidentStartTime</td>
+                    <td>@expiation.IncidentStartDate</td>
+                    <td>@expiation.VehicleSpeed</td>
+                    <td>@expiation.LsaCode</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 }

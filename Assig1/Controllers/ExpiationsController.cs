@@ -17,6 +17,11 @@ namespace Assig1.Controllers
         public IActionResult Index(string searchText, string offenceCode)
         {
 
+            if (string.IsNullOrWhiteSpace(searchText) && string.IsNullOrWhiteSpace(offenceCode))
+            {
+                return View(null);
+            }
+
             var expiationsQuery = _context.Expiations.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchText) || !string.IsNullOrWhiteSpace(offenceCode))

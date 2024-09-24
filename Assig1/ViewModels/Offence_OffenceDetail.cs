@@ -2,7 +2,7 @@
 
 namespace Assig1.ViewModels
 {
-    public class Data_DataDetail
+    public class Offence_OffenceDetail
     {
         public string OffenceCode { get; set; }
         public string Description { get; set; }

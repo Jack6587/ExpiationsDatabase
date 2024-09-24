@@ -183,7 +183,7 @@ namespace Assig1.Controllers
 
             var totalOffenceCount = await _context.Expiations.CountAsync();
 
-            var vm = new Data_DataDetail
+            var vm = new Offence_OffenceDetail
             {
                 OffenceCode = detailQuery.First().OffenceCode,
                 Description = detailQuery.First().Description,

@@ -1,5 +1,6 @@
 ﻿using Assig1.Data;
 using Assig1.Models;
+using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,22 +15,18 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string searchText, string offenceCode)
+        public IActionResult Index(string searchLsaText, string offenceCode)
         {
+            var vm = new ExpiationsSearchViewModel();
 
-            if (string.IsNullOrWhiteSpace(searchText) && string.IsNullOrWhiteSpace(offenceCode))
+            if (!string.IsNullOrWhiteSpace(searchLsaText) || !string.IsNullOrWhiteSpace(offenceCode))
             {
-                return View(null);
-            }
+                var expiationsQuery = _context.Expiations.AsQueryable();
 
-            var expiationsQuery = _context.Expiations.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(searchText) || !string.IsNullOrWhiteSpace(offenceCode))
-            {
-                if (!string.IsNullOrWhiteSpace(searchText))
+                if (!string.IsNullOrWhiteSpace(searchLsaText))
                 {
                     expiationsQuery = expiationsQuery
-                        .Where(e => e.LsaCode.Contains(searchText));
+                        .Where(e => e.LsaCode.Contains(searchLsaText));
                 }
 
                 if (!string.IsNullOrWhiteSpace(offenceCode))
@@ -37,11 +34,19 @@ namespace Assig1.Controllers
                     expiationsQuery = expiationsQuery
                         .Where(e => e.OffenceCode == offenceCode);
                 }
+
+                var expiations = expiationsQuery.ToList();
+
+                vm.Expiations = expiations;
+                vm.TotalExpiations = expiations.Count;
+                vm.MaxSpeed = expiations.Min(e => e.VehicleSpeed);
+                vm.AverageSpeed = expiations.Average(e => e.VehicleSpeed);
+                vm.MaxBAC = expiations.Max(e => e.BacContentExp);
+                vm.MaxFine = expiations.Max(e => e.TotalFeeAmt);
+                vm.AverageFine = expiations.Average(e => e.TotalFeeAmt);
             }
 
-            var expiations = expiationsQuery.ToList();
-
-            return View(expiations);
+            return View(vm);
         }
     }
 }

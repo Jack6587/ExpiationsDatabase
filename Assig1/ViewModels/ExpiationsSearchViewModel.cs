@@ -9,7 +9,7 @@ namespace Assig1.ViewModels
         public int TotalExpiations { get; set; }
         public int? MaxSpeed { get; set; }
         public double? AverageSpeed { get; set; }
-        public decimal MaxBAC { get; set; }
+        public decimal? MaxBAC { get; set; }
         public int? MaxFine { get; set; }
         public double? AverageFine { get; set; }
     }

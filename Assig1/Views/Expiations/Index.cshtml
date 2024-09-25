@@ -52,6 +52,9 @@
                     <td>@expiation.IncidentStartDate</td>
                     <td>@expiation.VehicleSpeed</td>
                     <td>@expiation.LsaCode</td>
+                    <td>
+                        <a href="@Url.Action("Detail", "Expiations", new { id = expiation.ExpId })">Data Breakdown</a>
+                    </td>
                 </tr>
             }
         </tbody>

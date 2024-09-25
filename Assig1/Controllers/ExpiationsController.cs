@@ -55,6 +55,19 @@ namespace Assig1.Controllers
                 .Where(e => e.ExpId == id)
                 .FirstOrDefault();
 
+            if(expiation == null)
+            {
+                return NotFound();
+            }
+
+            var stateCount = _context.Expiations
+                .Where(e => e.DriverState == expiation.DriverState)
+                .Count();
+
+            var lsaCount = _context.Expiations
+                .Where(e => e.LsaCode == expiation.LsaCode)
+                .Count();
+
             return View(expiation);
         }
 

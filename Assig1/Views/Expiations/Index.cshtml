@@ -22,11 +22,11 @@
     <h3>Statistics</h3>
     <ul>
         <li>Total Expiations : @Model.TotalExpiations</li>
-        <li>Max Speed : @Model.MaxSpeed</li>
-        <li>Average Speed : @Model.AverageSpeed</li>
+        <li>Max Speed : @Model.MaxSpeed km/h</li>
+        <li>Average Speed : @Model.AverageSpeed km/h</li>
         <li>Max BAC : @Model.MaxBAC</li>
-        <li>Max Fine : @Model.MaxFine</li>
-        <li>Average Fine : @Model.AverageFine</li>
+        <li>Max Fine : $@Model.MaxFine</li>
+        <li>Average Fine : $@Model.AverageFine</li>
     </ul>
     
     <h3>Number of records: @Model.Expiations.Count()</h3>
@@ -47,10 +47,10 @@
             {
                 <tr>
                     <td>@expiation.ExpId</td>
-                    <td>@expiation.TotalFeeAmt</td>
+                    <td>$@expiation.TotalFeeAmt</td>
                     <td>@expiation.IncidentStartTime</td>
                     <td>@expiation.IncidentStartDate</td>
-                    <td>@expiation.VehicleSpeed</td>
+                    <td>@expiation.VehicleSpeed km/h</td>
                     <td>@expiation.LsaCode</td>
                     <td>
                         <a href="@Url.Action("Detail", "Expiations", new { id = expiation.ExpId })">Data Breakdown</a>

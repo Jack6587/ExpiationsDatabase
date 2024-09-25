@@ -48,5 +48,15 @@ namespace Assig1.Controllers
 
             return View(vm);
         }
+
+        public IActionResult Detail(int id)
+        {
+            var expiation = _context.Expiations
+                .Where(e => e.ExpId == id)
+                .FirstOrDefault();
+
+            return View(expiation);
+        }
+
     }
 }

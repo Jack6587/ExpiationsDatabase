@@ -60,7 +60,7 @@ namespace Assig1.Controllers
                 return NotFound();
             }
 
-            var stateCount = _context.Expiations
+            var driverCount = _context.Expiations
                 .Where(e => e.DriverState == expiation.DriverState)
                 .Count();
 
@@ -68,7 +68,14 @@ namespace Assig1.Controllers
                 .Where(e => e.LsaCode == expiation.LsaCode)
                 .Count();
 
-            return View(expiation);
+            var vm = new Expiation_ExpiationDetail
+            {
+                Expiation = expiation,
+                DriverCount = driverCount,
+                LsaCount = lsaCount
+            };
+
+            return View(vm);
         }
 
     }

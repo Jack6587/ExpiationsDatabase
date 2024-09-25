@@ -1,12 +1,15 @@
-﻿@model Assig1.Models.Expiation
+﻿@model Assig1.ViewModels.Expiation_ExpiationDetail
 
 <h2>Expiation Detail</h2>
 
 <div>
-    <p>Expiation ID: @Model.ExpId</p>
-    <p>Total Fee: $@Model.TotalFeeAmt</p>
-    <p>Time: @Model.IncidentStartTime</p>
-    <p>Date: @Model.IncidentStartDate</p>
-    <p>Speed: @Model.VehicleSpeed km/h</p>
-    <p>LSA Code: @Model.LsaCode</p>
+    <p>Number of expiations in the driver's state: @Model.DriverCount</p>
+    <p>Number of expiations in the same LSA code area: @Model.LsaCount</p>
+    <p>Expiation ID: @Model.Expiation.ExpId</p>
+    <p>Total Fee: $@Model.Expiation.TotalFeeAmt</p>
+    <p>Time: @Model.Expiation.IncidentStartTime</p>
+    <p>Date: @Model.Expiation.IncidentStartDate</p>
+    <p>Speed: @Model.Expiation.VehicleSpeed km/h</p>
+    <p>LSA Code: @Model.Expiation.LsaCode</p>
+    <p>State: @Model.Expiation.DriverState</p>
 </div>

@@ -74,6 +74,8 @@ namespace Assig1.Controllers
             var index = _context.Expiations
                 .Count(e => e.VehicleSpeed.HasValue && e.VehicleSpeed <= expiation.VehicleSpeed);
 
+            var speedPercentile = index / speedCount * 100;
+
             var vm = new Expiation_ExpiationDetail
             {
                 Expiation = expiation,

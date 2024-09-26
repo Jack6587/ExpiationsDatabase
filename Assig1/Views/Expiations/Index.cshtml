@@ -23,10 +23,10 @@
     <ul>
         <li>Total Expiations : @Model.TotalExpiations</li>
         <li>Max Speed : @Model.MaxSpeed km/h</li>
-        <li>Average Speed : @Model.AverageSpeed km/h</li>
+        <li>Average Speed : @Model.AverageSpeed?.ToString("F2") km/h</li>
         <li>Max BAC : @Model.MaxBAC</li>
         <li>Max Fine : $@Model.MaxFine</li>
-        <li>Average Fine : $@Model.AverageFine</li>
+        <li>Average Fine : $@Model.AverageFine?.ToString("F2")</li>
     </ul>
     
     <h3>Number of records: @Model.Expiations.Count()</h3>

@@ -7,5 +7,6 @@ namespace Assig1.ViewModels
         public Expiation Expiation { get; set; }
         public int DriverCount { get; set; }
         public int LsaCount { get; set; }
+        public int SpeedPercentile { get; set; }
     }
 }

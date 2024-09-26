@@ -68,11 +68,18 @@ namespace Assig1.Controllers
                 .Where(e => e.LsaCode == expiation.LsaCode)
                 .Count();
 
+            var speedCount = _context.Expiations
+                .Count(e => e.VehicleSpeed.HasValue);
+
+            var index = _context.Expiations
+                .Count(e => e.VehicleSpeed.HasValue && e.VehicleSpeed <= expiation.VehicleSpeed);
+
             var vm = new Expiation_ExpiationDetail
             {
                 Expiation = expiation,
                 DriverCount = driverCount,
-                LsaCount = lsaCount
+                LsaCount = lsaCount,
+                SpeedPercentile = speedPercentile
             };
 
             return View(vm);

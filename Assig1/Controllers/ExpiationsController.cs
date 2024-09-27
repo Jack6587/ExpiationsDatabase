@@ -64,10 +64,6 @@ namespace Assig1.Controllers
                 .Where(e => e.DriverState == expiation.DriverState)
                 .Count();
 
-            var bacCount = _context.Expiations
-                .Where(e => e.BacContentExp.HasValue)
-                .Count();
-
             var lsaCount = _context.Expiations
                 .Where(e => e.LsaCode == expiation.LsaCode)
                 .Count();
@@ -80,12 +76,16 @@ namespace Assig1.Controllers
 
             var speedPercentile = (double)speedIndex / speedCount * 100;
 
+            var bacCount = _context.Expiations
+                .Where(e => e.BacContentExp > 0)
+                .Count();
+
             double bacPercentile = 0;
 
-            if(bacCount > 0 && expiation.BacContentExp.HasValue)
+            if(bacCount > 0 && expiation.BacContentExp > 0)
             {
                 var bacIndex = _context.Expiations
-                    .Count(e => e.BacContentExp.HasValue && e.BacContentExp <= expiation.BacContentExp);
+                    .Count(e => e.BacContentExp > 0 && e.BacContentExp <= expiation.BacContentExp);
 
                 bacPercentile = (double)bacIndex / bacCount * 100;
             } else

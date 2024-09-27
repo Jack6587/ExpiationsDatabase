@@ -60,7 +60,11 @@ else
             $("#AutoComplete").keypress(function () {
                 var title = $("#AutoComplete").val();
                 if (title.length >= 3) {
-
+                    $.get("/Speeding/SearchSuggestions", { inputString: title }, function (data) {
+                        $("#AutoComplete").autocomplete({
+                            source: data.split(',')
+                        })
+                    })
                 }
             })
         });

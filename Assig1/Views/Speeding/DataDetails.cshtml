@@ -43,6 +43,9 @@
                 <td>@expiation.TotalFeeAmt</td>
                 <td>@expiation.IncidentStartDate</td>
                 <td>@expiation.IncidentStartTime</td>
+                <td>
+                    <a href="@Url.Action("Detail", "Expiations", new { id = expiation.ExpId })">Details</a>
+                </td>
             </tr>
         }
     </tbody>

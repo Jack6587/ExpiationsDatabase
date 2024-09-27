@@ -64,6 +64,10 @@ namespace Assig1.Controllers
                 .Where(e => e.DriverState == expiation.DriverState)
                 .Count();
 
+            var bacCount = _context.Expiations
+                .Where(e => e.BacContentExp.HasValue)
+                .Count();
+
             var lsaCount = _context.Expiations
                 .Where(e => e.LsaCode == expiation.LsaCode)
                 .Count();
@@ -71,10 +75,15 @@ namespace Assig1.Controllers
             var speedCount = _context.Expiations
                 .Count(e => e.VehicleSpeed.HasValue);
 
-            var index = _context.Expiations
+            var speedIndex = _context.Expiations
                 .Count(e => e.VehicleSpeed.HasValue && e.VehicleSpeed <= expiation.VehicleSpeed);
 
-            var speedPercentile = (double)index / speedCount * 100;
+            var bacIndex = _context.Expiations
+                .Count(e => e.BacContentExp.HasValue && e.BacContentExp <= expiation.BacContentExp);
+
+            var speedPercentile = (double)speedIndex / speedCount * 100;
+
+            var bacPercentile = (double)bacIndex / bacCount * 100;
 
             var vm = new Expiation_ExpiationDetail
             {

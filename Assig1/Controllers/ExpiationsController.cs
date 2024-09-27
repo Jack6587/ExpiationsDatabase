@@ -78,19 +78,28 @@ namespace Assig1.Controllers
             var speedIndex = _context.Expiations
                 .Count(e => e.VehicleSpeed.HasValue && e.VehicleSpeed <= expiation.VehicleSpeed);
 
-            var bacIndex = _context.Expiations
-                .Count(e => e.BacContentExp.HasValue && e.BacContentExp <= expiation.BacContentExp);
-
             var speedPercentile = (double)speedIndex / speedCount * 100;
 
-            var bacPercentile = (double)bacIndex / bacCount * 100;
+            double bacPercentile = 0;
+
+            if(bacCount > 0 && expiation.BacContentExp.HasValue)
+            {
+                var bacIndex = _context.Expiations
+                    .Count(e => e.BacContentExp.HasValue && e.BacContentExp <= expiation.BacContentExp);
+
+                bacPercentile = (double)bacIndex / bacCount * 100;
+            } else
+            {
+                bacPercentile = 0;
+            }
 
             var vm = new Expiation_ExpiationDetail
             {
                 Expiation = expiation,
                 DriverCount = driverCount,
                 LsaCount = lsaCount,
-                SpeedPercentile = speedPercentile
+                SpeedPercentile = speedPercentile,
+                BacPercentile = bacPercentile
             };
 
             return View(vm);

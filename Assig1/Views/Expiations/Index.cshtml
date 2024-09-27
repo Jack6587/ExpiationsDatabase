@@ -40,6 +40,7 @@
                 <th>Incident Date</th>
                 <th>Vehicle Speed</th>
                 <th>LSA Code</th>
+                <th>BAC Content</th>
             </tr>
         </thead>
         <tbody>
@@ -52,6 +53,7 @@
                     <td>@expiation.IncidentStartDate</td>
                     <td>@expiation.VehicleSpeed km/h</td>
                     <td>@expiation.LsaCode</td>
+                    <td>@expiation.BacContentExp</td>
                     <td>
                         <a href="@Url.Action("Detail", "Expiations", new { id = expiation.ExpId })">Details</a>
                     </td>

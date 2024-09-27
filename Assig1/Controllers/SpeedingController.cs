@@ -54,6 +54,17 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> SearchSuggestions(string inputString)
+        {
+            var suggestions = await _context.Offences
+                .Where(o => o.Description.Contains(inputString))
+                .Select(o => o.Description)
+                .ToListAsync();
+
+            return Json(suggestions);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Details(string offenceCode)
         {
             var offence = await _context.Offences

@@ -62,7 +62,7 @@ else
                 if (title.length >= 3) {
                     $.get("/Speeding/SearchSuggestions", { inputString: title }, function (data) {
                         $("#AutoComplete").autocomplete({
-                            source: data.split(',')
+                            source: data
                         })
                     })
                 }

@@ -15,7 +15,7 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string searchLsaText, string offenceCode)
+        public async Task<IActionResult> Index(string searchLsaText, string offenceCode)
         {
             var vm = new ExpiationsSearchViewModel();
 
@@ -35,7 +35,7 @@ namespace Assig1.Controllers
                         .Where(e => e.OffenceCode == offenceCode);
                 }
 
-                var expiations = expiationsQuery.ToList();
+                var expiations = await expiationsQuery.ToListAsync();
 
                 vm.Expiations = expiations;
                 vm.TotalExpiations = expiations.Count;

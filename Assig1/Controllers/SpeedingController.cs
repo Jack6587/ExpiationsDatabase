@@ -3,7 +3,7 @@ using Assig1.Models;
 using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PagedList;
+using X.PagedList;
 
 namespace Assig1.Controllers
 {
@@ -16,7 +16,7 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public IActionResult Index(SpeedingCategoriesSearchViewModel vm, int page)
+        public IActionResult Index(SpeedingCategoriesSearchViewModel vm, int page = 1)
         {
             var categories = _context.SpeedingCategories
                 .OrderBy(sc => sc.SpeedCode)
@@ -48,12 +48,14 @@ namespace Assig1.Controllers
                         .Where(o => offenceCodes.Contains(o.OffenceCode));
                 }
 
-                int pageSize = 3;
-                vm.Offences = offencesQuery.ToPagedList(page, pageSize);
-            }
-            else
-            {
-                vm.Offences = new StaticPagedList<Offence>(new List<Offence>(), page, pageSize: 3, totalItemCount: 0)
+                int pageSize = 20;
+                var offences = offencesQuery
+                    .OrderBy(o => o.Description)
+                    .ToPagedList(page, pageSize);
+
+                vm.Offences = offences;
+                vm.CurrentPage = page;
+                vm.TotalPages = offences.PageCount;
             }
 
             return View(vm);

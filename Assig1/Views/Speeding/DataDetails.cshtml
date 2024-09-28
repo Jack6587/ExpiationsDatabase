@@ -4,8 +4,8 @@
     <div class="col-md-6">
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title">Offence Code: @Model.OffenceCode</h5>
-                <p class="card-text">Description: @Model.Description</p>
+                <h5 class="card-title">@Html.DisplayNameFor(m => m.TotalExpiations)</h5>
+                <p class="card-text">@Html.DisplayFor(m => m.TotalExpiations)</p>
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
     <div class="col-md-6">
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title">Frequency of Offence</h5>
+                <h5 class="card-title">@Html.DisplayNameFor(m => m.Frequency)</h5>
                 <p class="card-text">@Model.Frequency.ToString("F2")% of offences</p>
             </div>
         </div>

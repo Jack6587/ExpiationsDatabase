@@ -220,7 +220,7 @@ namespace Assig1.Controllers
 
             vm.Frequency = offenceFrequency;
             vm.TotalExpiations = specificOffencesCount;
-            vm.TotalFeePaid = vm.Expiations.Sum(e => e.TotalFeeAmt);
+            vm.TotalFeePaid = vm.Expiations.Sum(e => e.TotalFeeAmt ?? 0);
 
             return View(vm);
         }

@@ -192,7 +192,9 @@ namespace Assig1.Controllers
                     e.ExpId,
                     e.TotalFeeAmt,
                     e.IncidentStartDate,
-                    e.IncidentStartTime
+                    e.IncidentStartTime,
+                    e.LsaCode,
+                    e.DriverState
                 }).ToListAsync();
 
             if (detailQuery == null || !detailQuery.Any())
@@ -200,18 +202,13 @@ namespace Assig1.Controllers
                 return NotFound();
             }
 
-            var dateFilteredExpiations = detailQuery
-                .Where(d => (!startDate.HasValue || d.IncidentStartDate >= startDate) &&
-                            (!endDate.HasValue || d.IncidentStartDate <= endDate))
-                .ToList();
-
             var totalOffenceCount = await _context.Expiations.CountAsync();
 
             var vm = new Offence_OffenceDetail
             {
                 OffenceCode = detailQuery.First().OffenceCode,
                 Description = detailQuery.First().Description,
-                Expiations = dateFilteredExpiations.Select(d => new Expiation
+                Expiations = detailQuery.Select(d => new Expiation
                 {
                    ExpId = d.ExpId,
                    TotalFeeAmt = d.TotalFeeAmt,
@@ -220,12 +217,23 @@ namespace Assig1.Controllers
                 }).ToList()
             };
 
-            var specificOffencesCount = vm.Expiations.Count();
-            double offenceFrequency = ((double)specificOffencesCount / totalOffenceCount) * 100;
-
-            vm.Frequency = offenceFrequency;
-            vm.TotalExpiations = specificOffencesCount;
+            vm.TotalExpiations = vm.Expiations.Count();
             vm.TotalFeePaid = vm.Expiations.Sum(e => e.TotalFeeAmt ?? 0);
+            vm.Frequency = ((double)vm.TotalExpiations / totalOffenceCount) * 100;
+
+            vm.MostCommonLsaCode = detailQuery
+                .GroupBy(x => x.LsaCode)
+                .OrderByDescending(g => g.Count())
+                .Select(x => x.Key)
+                .FirstOrDefault();
+
+            var dateFilteredExpiations = vm.Expiations
+                .Where(d => (!startDate.HasValue || d.IncidentStartDate >= startDate) &&
+                            (!endDate.HasValue || d.IncidentStartDate <= endDate))
+                .ToList();
+
+            vm.TotalExpiations = dateFilteredExpiations.Count();
+            vm.TotalFeePaid = dateFilteredExpiations.Sum(e => e.TotalFeeAmt ?? 0);
 
             return View(vm);
         }

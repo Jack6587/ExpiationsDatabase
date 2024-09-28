@@ -179,7 +179,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> OffenceDetails(string offenceCode)
+        public async Task<IActionResult> OffenceDetails(string offenceCode, DateOnly? startDate, DateOnly? endDate)
         {
             var detailQuery = await (
                 from o in _context.Offences
@@ -200,13 +200,18 @@ namespace Assig1.Controllers
                 return NotFound();
             }
 
+            var dateFilteredExpiations = detailQuery
+                .Where(d => (!startDate.HasValue || d.IncidentStartDate >= startDate) &&
+                            (!endDate.HasValue || d.IncidentStartDate <= endDate))
+                .ToList();
+
             var totalOffenceCount = await _context.Expiations.CountAsync();
 
             var vm = new Offence_OffenceDetail
             {
                 OffenceCode = detailQuery.First().OffenceCode,
                 Description = detailQuery.First().Description,
-                Expiations = detailQuery.Select(d => new Expiation
+                Expiations = dateFilteredExpiations.Select(d => new Expiation
                 {
                    ExpId = d.ExpId,
                    TotalFeeAmt = d.TotalFeeAmt,

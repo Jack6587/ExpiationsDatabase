@@ -1,5 +1,19 @@
 ﻿@model Assig1.ViewModels.Offence_OffenceDetail
 
+<form method="get">
+    <input type="hidden" name="offenceCode" value="@Model.OffenceCode" />
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" name="startDate" id="startDate" />
+
+    <label for="endDate">End Date: </label>
+    <input type="date" name="endDate" id="endDate" />
+
+    <button type="submit">Filter</button>
+</form>
+
+<br />
+
 <div class="row">
     <div class="col-md-6">
         <div class="card mb-4">
@@ -27,14 +41,6 @@
     </div>
 </div>
 
-<label for="startDate">Start Date:</label>
-<input type="date" name="startDate" id="startDate" />
-
-<label for="endDate">End Date: </label>
-<input type="date" name="endDate" id="endDate" />
-
-<button type="submit">Sort</button>
-
 <table class="table">
     <thead>
         <tr>
@@ -51,6 +57,8 @@
                 <td>@expiation.TotalFeeAmt</td>
                 <td>@expiation.IncidentStartDate</td>
                 <td>@expiation.IncidentStartTime</td>
+                <td>@expiation.LsaCode</td>
+                <td>@expiation.DriverState</td>
                 <td>
                     <a href="@Url.Action("Detail", "Expiations", new { id = expiation.ExpId })">Details</a>
                 </td>

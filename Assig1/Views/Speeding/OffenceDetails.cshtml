@@ -4,16 +4,16 @@
     <div class="col-md-6">
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title">@Html.DisplayNameFor(m => m.TotalExpiations)</h5>
-                <p class="card-text">@Html.DisplayFor(m => m.TotalExpiations)</p>
+                <h5 class="card-title">@Html.DisplayNameFor(m => m.TotalFeePaid)</h5>
+                <p class="card-text">@Html.DisplayFor(m => m.TotalFeePaid)</p>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="card mb-4">
             <div class="card-body">
-                <h5 class="card-title">Total Expiations</h5>
-                <p class="card-text">@Model.TotalExpiations</p>
+                <h5 class="card-title">@Html.DisplayNameFor(m => m.TotalExpiations)</h5>
+                <p class="card-text">@Html.DisplayFor(m => m.TotalExpiations)</p>
             </div>
         </div>
     </div>
@@ -26,6 +26,14 @@
         </div>
     </div>
 </div>
+
+<label for="startDate">Start Date:</label>
+<input type="date" name="startDate" id="startDate" />
+
+<label for="endDate">End Date: </label>
+<input type="date" name="endDate" id="endDate" />
+
+<button type="submit">Sort</button>
 
 <table class="table">
     <thead>

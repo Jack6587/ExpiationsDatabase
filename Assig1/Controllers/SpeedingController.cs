@@ -73,7 +73,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(string offenceCode)
+        public async Task<IActionResult> SpeedingDetails(string offenceCode)
         {
             var offence = await _context.Offences
                 .Where(o => o.OffenceCode == offenceCode)
@@ -143,7 +143,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DataBreakdown(string speedCode, string sortBy = "OffenceCode")
+        public async Task<IActionResult> SpeedCodeBreakdown(string speedCode, string sortBy = "OffenceCode")
         {
             var query = await (
                         from o in _context.Offences
@@ -151,7 +151,7 @@ namespace Assig1.Controllers
                         join sc in _context.SpeedingCategories on o.OffenceCode equals sc.OffenceCode
                         where sc.SpeedCode == speedCode
                         group new { o, e, sc } by new { o.OffenceCode, o.Description, sc.SpeedDescription } into g
-                        select new DataBreakdownViewModel
+                        select new SpeedCodeBreakdownViewModel
                         {
                             OffenceCode = g.Key.OffenceCode,
                             Description = g.Key.Description,
@@ -179,7 +179,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DataDetails(string offenceCode)
+        public async Task<IActionResult> OffenceDetails(string offenceCode)
         {
             var detailQuery = await (
                 from o in _context.Offences

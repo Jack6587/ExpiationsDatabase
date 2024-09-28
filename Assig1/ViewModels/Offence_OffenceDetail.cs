@@ -12,11 +12,11 @@ namespace Assig1.ViewModels
         public string Description { get; set; }
         public IEnumerable<Expiation> Expiations { get; set; }
 
-        [Display(Name = "Total Fee Paid")]
+        [Display(Name = "Total Expiations")]
         [DisplayFormat(DataFormatString = "{0:N0}")]
         public int TotalExpiations { get; set; }
 
-        [Display(Name = "Total Fee Paid")]
+        [Display(Name = "Total Fees Paid")]
         [DisplayFormat(DataFormatString = "${0:N2}")]
         public int? TotalFeePaid { get; set; }
 

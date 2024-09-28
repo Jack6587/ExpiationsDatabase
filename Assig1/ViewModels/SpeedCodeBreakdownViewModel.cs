@@ -1,6 +1,6 @@
 ﻿namespace Assig1.ViewModels
 {
-    public class DataBreakdownViewModel
+    public class SpeedCodeBreakdownViewModel
     {
         public string OffenceCode { get; set; }
         public string Description { get; set; }

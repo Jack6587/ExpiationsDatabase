@@ -1,15 +1,15 @@
-﻿@model IEnumerable<Assig1.ViewModels.DataBreakdownViewModel>
+﻿@model IEnumerable<Assig1.ViewModels.SpeedCodeBreakdownViewModel>
 
 <h2>Data Breakdown</h2>
 
 <form method="get">
     <input type="hidden" name="speedCode" value="@ViewContext.HttpContext.Request.Query["speedCode"]" />
+    
     <label for="sortBy">Sort By: </label>
     <select name="sortBy" id="sortBy">
         <option value="OffenceCount">Offence Occurence</option>
         <option value="AverageFeeAmt">Average Fee Amount</option>
     </select>
-    <button type="submit">Sort</button>
 </form>
 
 @if(Model != null && Model.Any())
@@ -34,7 +34,7 @@
                 <td>@item.AverageFeeAmt?.ToString("F2")</td>
                 <td>@item.OffenceCount</td>
                 <td>
-                    <a href="@Url.Action("DataDetails", "Speeding", new { offenceCode = item.OffenceCode })">View Details About Offence</a>
+                    <a href="@Url.Action("OffenceDetails", "Speeding", new { offenceCode = item.OffenceCode })">View Details About Offence</a>
                 </td>
             </tr>
             }

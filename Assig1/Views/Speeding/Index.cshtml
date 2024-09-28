@@ -51,6 +51,18 @@ else
         }
     </ul>
 
+    @for (int i = 1; i <= Model.Offences.PageCount; i++)
+    {
+        if (i == Model.Offences.PageNumber)
+        {
+            <strong>@i</strong>
+        }
+        else
+        {
+            <a asp-controller="Speeding" asp-action="Index" asp-route-page="@i">@i</a>
+        }
+    }
+
 }
 
 @section Scripts {

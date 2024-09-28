@@ -48,7 +48,7 @@ namespace Assig1.Controllers
                         .Where(o => offenceCodes.Contains(o.OffenceCode));
                 }
 
-                int pageSize = 20;
+                int pageSize = 10;
                 var offences = offencesQuery
                     .OrderBy(o => o.Description)
                     .ToPagedList(page, pageSize);

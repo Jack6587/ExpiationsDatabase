@@ -51,6 +51,11 @@ else
         }
     </ul>
 
+    @if (Model.Offences.HasPreviousPage)
+    {
+        <a asp-controller="Speeding" asp-action="Index" asp-route-SearchText="@Model.SearchText" asp-route-SpeedCode="@Model.SpeedCode" asp-route-page="@(Model.Offences.PageNumber - 1)">Previous</a>
+
+    }
     @for (int i = 1; i <= Model.Offences.PageCount; i++)
     {
         if (i == Model.Offences.PageNumber)
@@ -59,10 +64,14 @@ else
         }
         else
         {
-            <a asp-controller="Speeding" asp-action="Index" asp-route-page="@i">@i</a>
+            <a asp-controller="Speeding" asp-action="Index" asp-route-SearchText="@Model.SearchText" asp-route-SpeedCode="@Model.SpeedCode" asp-route-page="@i">@i</a>
         }
     }
 
+    @if (Model.Offences.HasNextPage)
+    {
+        <a asp-controller="Speeding" asp-action="Index" asp-route-SearchText="@Model.SearchText" asp-route-SpeedCode="@Model.SpeedCode" asp-route-page="@(Model.Offences.PageNumber + 1)">Next</a>
+    }
 }
 
 @section Scripts {

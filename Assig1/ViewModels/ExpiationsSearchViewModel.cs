@@ -1,10 +1,13 @@
 ﻿using Assig1.Models;
+using X.PagedList;
 
 namespace Assig1.ViewModels
 {
     public class ExpiationsSearchViewModel
     {
-        public List<Expiation> Expiations { get; set; } = new List<Expiation>();
+        public IPagedList<Expiation> Expiations { get; set; }
+        public string SearchLsaText { get; set; }
+        public string OffenceCode { get; set; }
 
         public int TotalExpiations { get; set; }
         public int? MaxSpeed { get; set; }
@@ -12,5 +15,7 @@ namespace Assig1.ViewModels
         public decimal? MaxBAC { get; set; }
         public int? MaxFine { get; set; }
         public double? AverageFine { get; set; }
+        public int CurrentPage { get; set; }
+        public int TotalPages { get; set; }
     }
 }

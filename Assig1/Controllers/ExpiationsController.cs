@@ -3,6 +3,7 @@ using Assig1.Models;
 using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 
 namespace Assig1.Controllers
 {
@@ -15,7 +16,7 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchLsaText, string offenceCode)
+        public async Task<IActionResult> Index(string searchLsaText, string offenceCode, int page = 1)
         {
             var vm = new ExpiationsSearchViewModel();
 
@@ -35,9 +36,16 @@ namespace Assig1.Controllers
                         .Where(e => e.OffenceCode == offenceCode);
                 }
 
-                var expiations = await expiationsQuery.ToListAsync();
+                int pageSize = 60;
+                var expiations = expiationsQuery
+                    .ToPagedList(page, pageSize);
+
+                vm.CurrentPage = page;
+                vm.TotalPages = expiations.PageCount;
 
                 vm.Expiations = expiations;
+                vm.SearchLsaText = searchLsaText;
+                vm.OffenceCode = offenceCode;
                 vm.TotalExpiations = expiations.Count;
                 vm.MaxSpeed = expiations.Max(e => e.VehicleSpeed);
                 vm.AverageSpeed = expiations.Average(e => e.VehicleSpeed);

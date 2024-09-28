@@ -49,8 +49,11 @@ namespace Assig1.Controllers
                 }
 
                 int pageSize = 3;
-                var offences = offencesQuery.ToPagedList(page, pageSize);
-                vm.Offences = offences;
+                vm.Offences = offencesQuery.ToPagedList(page, pageSize);
+            }
+            else
+            {
+                vm.Offences = new StaticPagedList<Offence>(new List<Offence>(), page, pageSize: 3, totalItemCount: 0)
             }
 
             return View(vm);

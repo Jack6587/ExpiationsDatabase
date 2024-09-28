@@ -1,5 +1,6 @@
 ﻿using Assig1.Models;
 using System.ComponentModel.DataAnnotations;
+using PagedList;
 
 namespace Assig1.ViewModels
 {
@@ -9,6 +10,6 @@ namespace Assig1.ViewModels
         public string SearchText { get; set; }
         public string? SpeedCode { get; set; }
         public List<SpeedingCategory> SpeedingCategories { get; set; }
-        public List<Offence> Offences {  get; set; }
+        public IPagedList<Offence> Offences {  get; set; }
     }
 }

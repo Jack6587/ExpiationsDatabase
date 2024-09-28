@@ -36,22 +36,22 @@ namespace Assig1.Controllers
                         .Where(e => e.OffenceCode == offenceCode);
                 }
 
-                int pageSize = 60;
+                vm.TotalExpiations = expiationsQuery.Count();
+                vm.MaxSpeed = expiationsQuery.Max(e => e.VehicleSpeed);
+                vm.AverageSpeed = expiationsQuery.Average(e => e.VehicleSpeed);
+                vm.MaxBAC = expiationsQuery.Max(e => e.BacContentExp);
+                vm.MaxFine = expiationsQuery.Max(e => e.TotalFeeAmt);
+                vm.AverageFine = expiationsQuery.Average(e => e.TotalFeeAmt);
+
+                int pageSize = 200;
                 var expiations = expiationsQuery
                     .ToPagedList(page, pageSize);
 
                 vm.CurrentPage = page;
                 vm.TotalPages = expiations.PageCount;
-
                 vm.Expiations = expiations;
                 vm.SearchLsaText = searchLsaText;
                 vm.OffenceCode = offenceCode;
-                vm.TotalExpiations = expiations.Count;
-                vm.MaxSpeed = expiations.Max(e => e.VehicleSpeed);
-                vm.AverageSpeed = expiations.Average(e => e.VehicleSpeed);
-                vm.MaxBAC = expiations.Max(e => e.BacContentExp);
-                vm.MaxFine = expiations.Max(e => e.TotalFeeAmt);
-                vm.AverageFine = expiations.Average(e => e.TotalFeeAmt);
             }
 
             return View(vm);

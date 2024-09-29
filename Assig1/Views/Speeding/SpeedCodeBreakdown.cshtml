@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Assig1.ViewModels.SpeedCodeBreakdownViewModel>
 
-<h2>Data Breakdown</h2>
+<h2>Data Breakdown for @ViewContext.HttpContext.Request.Query["speedCode"]</h2>
 
 <form method="get">
     <input type="hidden" name="speedCode" value="@ViewContext.HttpContext.Request.Query["speedCode"]" />
@@ -21,7 +21,7 @@
         <tr>
             <th>Offence Code</th>
             <th>Description</th>
-            <th>Speed Description</th>
+            <th>Speed Type</th>
             <th>Average Fee Amount</th>
             <th>Offence Occurence</th>
         </tr>

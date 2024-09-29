@@ -45,6 +45,12 @@ namespace Assig1.Controllers
                     case "lsa_desc":
                         expiationsQuery = expiationsQuery.OrderByDescending(e => e.LsaCode);
                         break;
+                    case "time_asc":
+                        expiationsQuery = expiationsQuery.OrderBy(e => e.IncidentStartTime);
+                        break;
+                    case "time_desc":
+                        expiationsQuery = expiationsQuery.OrderByDescending(e => e.IncidentStartTime);
+                        break;
                     case "bac_desc":
                         expiationsQuery = expiationsQuery.OrderByDescending(e => e.BacContentExp);
                         break;
@@ -59,6 +65,7 @@ namespace Assig1.Controllers
                 vm.MaxBAC = expiationsQuery.Max(e => e.BacContentExp);
                 vm.MaxFine = expiationsQuery.Max(e => e.TotalFeeAmt);
                 vm.AverageFine = expiationsQuery.Average(e => e.TotalFeeAmt);
+                vm.SortOrder = sortOrder;
 
                 int pageSize = 200;
                 var expiations = expiationsQuery

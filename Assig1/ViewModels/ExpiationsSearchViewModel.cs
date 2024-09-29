@@ -8,7 +8,7 @@ namespace Assig1.ViewModels
         public IPagedList<Expiation> Expiations { get; set; }
         public string SearchLsaText { get; set; }
         public string OffenceCode { get; set; }
-
+        public string SortOrder { get; set; }
         public int TotalExpiations { get; set; }
         public int? MaxSpeed { get; set; }
         public double? AverageSpeed { get; set; }

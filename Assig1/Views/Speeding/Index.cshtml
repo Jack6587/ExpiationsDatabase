@@ -21,7 +21,7 @@
     <button type="submit" class="btn btn-primary mt-2">Search</button>
 </form>
 
-<h3>Offence</h3>
+<h3>Speeding Categories</h3>
 @if (Model.Offences == null)
 {
     <p>Search for an offence!</p>
@@ -32,24 +32,45 @@ else if (!Model.Offences.Any())
 }
 else
 {
-    @foreach (var category in Model.SpeedingCategories)
-    {
-        <li>
-            @category.SpeedDescription - @category.SpeedCode
-            <a href="@Url.Action("SpeedCodeBreakdown", "Speeding", new { speedCode = category.SpeedCode })">Data Breakdown</a>
-        </li>
-    }
+    <div class="row">
+        @foreach (var category in Model.SpeedingCategories)
+        {
+            <div class="col-md-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">@category.SpeedDescription</h5>
+                        <p class="card-text">Speed Code: @category.SpeedCode</p>
+                        <a href="@Url.Action("SpeedCodeBreakdown", "Speeding", new { speedCode = category.SpeedCode })">Data Breakdown</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
 
     <h3>Number of records: @Model.Offences.Count()</h3>
-    <ul>
-        @foreach (var offence in Model.Offences)
-        {
-            <li>
-                @offence.Description - @offence.OffenceCode
-                <a href="@Url.Action("SpeedingDetails", "Speeding", new { offenceCode = offence.OffenceCode })">View Details</a>
-            </li>
-        }
-    </ul>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Offence Code</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var offence in Model.Offences)
+            {
+                <tr>
+                    <td>@offence.Description</td>
+                    <td>@offence.OffenceCode</td>
+                    <td>
+                        <a href="@Url.Action("SpeedingDetails", "Speeding", new { offenceCode = offence.OffenceCode })">View Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
     @if (Model.Offences.HasPreviousPage)
     {

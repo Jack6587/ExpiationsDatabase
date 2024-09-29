@@ -2,6 +2,7 @@
 using Assig1.Models;
 using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 
@@ -16,7 +17,7 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchLsaText, string offenceCode, int page = 1)
+        public async Task<IActionResult> Index(string searchLsaText, string offenceCode, int page = 1, string sortOrder = "default")
         {
             var vm = new ExpiationsSearchViewModel();
 
@@ -34,6 +35,22 @@ namespace Assig1.Controllers
                 {
                     expiationsQuery = expiationsQuery
                         .Where(e => e.OffenceCode == offenceCode);
+                }
+
+                switch (sortOrder)
+                {
+                    case "lsa_asc":
+                        expiationsQuery = expiationsQuery.OrderBy(e => e.LsaCode);
+                        break;
+                    case "lsa_desc":
+                        expiationsQuery = expiationsQuery.OrderByDescending(e => e.LsaCode);
+                        break;
+                    case "bac_desc":
+                        expiationsQuery = expiationsQuery.OrderByDescending(e => e.BacContentExp);
+                        break;
+                    default:
+                        expiationsQuery = expiationsQuery.OrderBy(e => e.ExpId);
+                        break;
                 }
 
                 vm.TotalExpiations = expiationsQuery.Count();

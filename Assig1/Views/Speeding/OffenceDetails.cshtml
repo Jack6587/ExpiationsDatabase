@@ -1,18 +1,6 @@
 ﻿@model Assig1.ViewModels.Offence_OffenceDetail
 
-<form method="get">
-    <input type="hidden" name="offenceCode" value="@Model.OffenceCode" />
 
-    <label for="startDate">Start Date:</label>
-    <input type="date" name="startDate" id="startDate" />
-
-    <label for="endDate">End Date: </label>
-    <input type="date" name="endDate" id="endDate" />
-
-    <button type="submit">Filter</button>
-</form>
-
-<br />
 
 <div class="row">
     <div class="col-md-6">
@@ -56,6 +44,20 @@
         </div>
     </div>
 </div>
+
+<form method="get">
+    <input type="hidden" name="offenceCode" value="@Model.OffenceCode" />
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" name="startDate" id="startDate" />
+
+    <label for="endDate">End Date: </label>
+    <input type="date" name="endDate" id="endDate" />
+
+    <button type="submit">Filter</button>
+</form>
+
+<br />
 
 <table class="table">
     <thead>

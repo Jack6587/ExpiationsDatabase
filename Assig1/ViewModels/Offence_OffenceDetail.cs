@@ -11,6 +11,7 @@ namespace Assig1.ViewModels
         [Display(Name = "Description")]
         public string Description { get; set; }
         public IEnumerable<Expiation> Expiations { get; set; }
+        public IEnumerable<dynamic> MonthExpiations { get; set; }
 
         [Display(Name = "Total Expiations")]
         [DisplayFormat(DataFormatString = "{0:N0}")]

@@ -205,6 +205,10 @@ namespace Assig1.Controllers
 
             var totalOffenceCount = await _context.Expiations.CountAsync();
 
+            var monthlyExpiations = await _context.Expiations
+                .Where(e => e.OffenceCode == offenceCode)
+                .ToListAsync();
+
             var vm = new Offence_OffenceDetail
             {
                 OffenceCode = detailQuery.First().OffenceCode,

@@ -13,9 +13,11 @@ namespace Assig1.ViewModels
         [Display(Name = "Number of Expiations in Same LSA Code Area")]
         public int LsaCount { get; set; }
 
+        [Display(Name = "Percentile of All Speed Expiations")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
         public double SpeedPercentile { get; set; }
 
+        [Display(Name = "Percentile of All BAC Expiations")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
         public double BacPercentile { get; set; }
     }

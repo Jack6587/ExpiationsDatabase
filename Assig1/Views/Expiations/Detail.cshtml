@@ -5,8 +5,8 @@
 <div>
     <p>@Html.DisplayNameFor(m => m.DriverStateCount): @Model.DriverStateCount</p>
     <p>@Html.DisplayNameFor(m => m.LsaCount): @Model.LsaCount</p>
-    <p>Percentile of all speed expiations: @Html.DisplayFor(m => m.SpeedPercentile)</p>
-    <p>Percentile of BAC: @Html.DisplayFor(m => m.BacPercentile)</p>
+    <p>@Html.DisplayNameFor(m => m.SpeedPercentile): @Html.DisplayFor(m => m.SpeedPercentile)</p>
+    <p>@Html.DisplayNameFor(m => m.BacPercentile): @Html.DisplayFor(m => m.BacPercentile)</p>
     <p>Expiation ID: @Model.Expiation.ExpId</p>
     <p>Total Fee: $@Model.Expiation.TotalFeeAmt</p>
     <p>Time: @Model.Expiation.IncidentStartTime</p>

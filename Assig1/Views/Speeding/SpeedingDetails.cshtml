@@ -2,24 +2,62 @@
 
 <div class="container mt-4">
     <h1>@Model.Description</h1>
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.OffenceCode)</dt>
-    <dd class="col-sm-10">@Model.OffenceCode</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.ExpiationFee)</dt>
-    <dd class="col-sm-10">@Model.ExpiationFee</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.DemeritPoints)</dt>
-    <dd class="col-sm-10">@Model.DemeritPoints</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.TotalOffences)</dt>
-    <dd class="col-sm-10">@Model.TotalOffences</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.AverageDemeritPoints)</dt>
-    <dd class="col-sm-10">@Html.DisplayFor(m => m.AverageDemeritPoints)</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.AverageFeePaid)</dt>
-    <dd class="col-sm-10">@Html.DisplayFor(m => m.AverageFeePaid)</dd>
-
-    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.HighestFeePaid)</dt>
-    <dd class="col-sm-10">@Html.DisplayFor(m => m.HighestFeePaid)</dd>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(m => m.OffenceCode)</h5>
+                    <p class="card-text">@Html.DisplayFor(m => m.OffenceCode)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(m => m.ExpiationFee)</h5>
+                    <p class="card-text">@Model.ExpiationFee</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(m => m.DemeritPoints)</h5>
+                    <p class="card-text">@Model.DemeritPoints</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(m => m.TotalOffences)</h5>
+                    <p class="card-text">@Model.TotalOffences</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(m => m.AverageDemeritPoints)</h5>
+                    <p class="card-text">@Html.DisplayFor(m => m.AverageDemeritPoints)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(m => m.AverageFeePaid)</h5>
+                    <p class="card-text">@Html.DisplayFor(m => m.AverageFeePaid)</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayNameFor(m => m.HighestFeePaid)</h5>
+                    <p class="card-text">@Html.DisplayFor(m => m.HighestFeePaid)</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

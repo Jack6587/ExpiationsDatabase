@@ -13,6 +13,14 @@
         <label for="offenceCode">Search by Offence Code: </label>
         <input type="text" id="offenceCode" name="offenceCode" class="form-control" placeholder="Search Offence Codes..." value="@Model.OffenceCode" />
     </div>
+
+    <select name="sortOrder" id="sortOrder">
+        <option value="" selected>Expiation ID</option>
+        <option value="lsa_asc">LSA Code Ascending</option>
+        <option value="lsa_desc">LSA Code Descending</option>
+        <option value="bac_asc">BAC</option>
+    </select>
+    
     <button type="submit">Search</button>
 </form>
 

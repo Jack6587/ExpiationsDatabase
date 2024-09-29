@@ -2,6 +2,7 @@
 using Assig1.Models;
 using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 
@@ -143,7 +144,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SpeedCodeBreakdown(string speedCode, string sortBy = "OffenceCode")
+        public async Task<IActionResult> SpeedCodeBreakdown(string speedCode, string sortOrder = "default")
         {
             var query = await (
                         from o in _context.Offences
@@ -161,13 +162,20 @@ namespace Assig1.Controllers
                         }).OrderByDescending(d => d.OffenceCount)
                         .ToListAsync();
 
-            if(sortBy == "AverageFeeAmt")
+            switch (sortOrder)
             {
-                query = query.OrderByDescending(d => d.AverageFeeAmt).ToList();
-            } 
-            else if (sortBy == "OffenceCount") 
-            {
-                query = query.OrderByDescending(d => d.OffenceCount).ToList();
+                case "offence_count_asc":
+                    query = query.OrderBy(d => d.OffenceCount).ToList();
+                    break;
+                case "fee_desc":
+                    query = query.OrderByDescending(d => d.AverageFeeAmt).ToList(); ;
+                    break;
+                case "fee_asc":
+                    query = query.OrderBy(d => d.AverageFeeAmt).ToList(); ;
+                    break;
+                default:
+                    query = query.OrderByDescending(d => d.OffenceCount).ToList();
+                    break;
             }
 
             if (query == null)

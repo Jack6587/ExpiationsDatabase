@@ -5,10 +5,12 @@
 <form method="get">
     <input type="hidden" name="speedCode" value="@ViewContext.HttpContext.Request.Query["speedCode"]" />
     
-    <label for="sortBy">Sort By: </label>
-    <select name="sortBy" id="sortBy">
-        <option value="OffenceCount">Offence Occurence</option>
-        <option value="AverageFeeAmt">Average Fee Amount</option>
+    <label for="sortOrder">Sort By: </label>
+    <select name="sortOrder" id="sortOrder">
+        <option value="" selected>Offence Occurence Descending</option>
+        <option value="offence_count_asc">Offence Occurence Ascending</option>
+        <option value="fee_desc">Average Fee Amount Descending</option>
+        <option value="fee_asc">Average Fee Amount Ascending</option>
     </select>
 
     <button type="submit">Sort</button>

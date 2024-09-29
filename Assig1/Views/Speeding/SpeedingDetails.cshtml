@@ -2,24 +2,24 @@
 
 <div class="container mt-4">
     <h1>@Model.Description</h1>
-    <dt class="col-sm-2">Offence Code</dt>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.OffenceCode)</dt>
     <dd class="col-sm-10">@Model.OffenceCode</dd>
 
-    <dt class="col-sm-2">Expiation Fee</dt>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.ExpiationFee)</dt>
     <dd class="col-sm-10">@Model.ExpiationFee</dd>
 
-    <dt class="col-sm-2">Demerit Points</dt>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.DemeritPoints)</dt>
     <dd class="col-sm-10">@Model.DemeritPoints</dd>
 
-    <dt class="col-sm-2">Total Offences</dt>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.TotalOffences)</dt>
     <dd class="col-sm-10">@Model.TotalOffences</dd>
 
-    <dt class="col-sm-2">Average Demerit Points For This Category</dt>
-    <dd class="col-sm-10">@Model.AverageDemeritPoints</dd>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.AverageDemeritPoints)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.AverageDemeritPoints)</dd>
 
-    <dt class="col-sm-2">Average Fee Paid For This Category</dt>
-    <dd class="col-sm-10">@Model.AverageFeePaid</dd>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.AverageFeePaid)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.AverageFeePaid)</dd>
 
-    <dt class="col-sm-2">Highest Fee Paid For This Category</dt>
-    <dd class="col-sm-10">@Model.HighestFeePaid</dd>
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.HighestFeePaid)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.HighestFeePaid)</dd>
 </div>

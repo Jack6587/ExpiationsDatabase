@@ -47,6 +47,14 @@
             </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Most Common State</h5>
+                <p class="card-text">@Model.MostCommonState</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <table class="table">
@@ -56,6 +64,9 @@
             <th>Total Fee Amount</th>
             <th>Date</th>
             <th>Time</th>
+            <th>LSA Code</th>
+            <th>State</th>
+            <th>Speed Limit</th>
         </tr>
     </thead>
     <tbody>
@@ -67,6 +78,7 @@
                 <td>@expiation.IncidentStartTime</td>
                 <td>@expiation.LsaCode</td>
                 <td>@expiation.DriverState</td>
+                <td>@expiation.LocationSpeedLimit</td>
                 <td>
                     <a href="@Url.Action("Detail", "Expiations", new { id = expiation.ExpId })">Details</a>
                 </td>

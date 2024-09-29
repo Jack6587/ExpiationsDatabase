@@ -194,7 +194,8 @@ namespace Assig1.Controllers
                     e.IncidentStartDate,
                     e.IncidentStartTime,
                     e.LsaCode,
-                    e.DriverState
+                    e.DriverState,
+                    e.LocationSpeedLimit
                 }).ToListAsync();
 
             if (detailQuery == null || !detailQuery.Any())
@@ -213,7 +214,10 @@ namespace Assig1.Controllers
                    ExpId = d.ExpId,
                    TotalFeeAmt = d.TotalFeeAmt,
                    IncidentStartDate = d.IncidentStartDate,
-                   IncidentStartTime = d.IncidentStartTime
+                   IncidentStartTime = d.IncidentStartTime,
+                   LsaCode = d.LsaCode,
+                   DriverState = d.DriverState,
+                   LocationSpeedLimit = d.LocationSpeedLimit
                 }).ToList()
             };
 
@@ -223,6 +227,12 @@ namespace Assig1.Controllers
 
             vm.MostCommonLsaCode = detailQuery
                 .GroupBy(x => x.LsaCode)
+                .OrderByDescending(g => g.Count())
+                .Select(x => x.Key)
+                .FirstOrDefault();
+
+            vm.MostCommonState = detailQuery
+                .GroupBy(x => x.DriverState)
                 .OrderByDescending(g => g.Count())
                 .Select(x => x.Key)
                 .FirstOrDefault();

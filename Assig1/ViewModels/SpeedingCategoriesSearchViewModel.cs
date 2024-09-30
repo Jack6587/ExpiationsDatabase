@@ -6,12 +6,14 @@ namespace Assig1.ViewModels
 {
     public class SpeedingCategoriesSearchViewModel
     {
-        [Required(ErrorMessage = "You must provide a search term")]
+        [Display(Name = "Search by Offence Description:")]
+        [StringLength(100, ErrorMessage = "Search term cannot exceed 100 characters")]
         public string SearchText { get; set; }
+
+        [Display(Name = "Filter by Speed Code")]
         public string? SpeedCode { get; set; }
         public List<SpeedingCategory> SpeedingCategories { get; set; }
         public IPagedList<Offence> Offences {  get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
     }
-}

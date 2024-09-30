@@ -7,12 +7,12 @@
 
 <form asp-controller="Speeding" asp-action="Index" method="get">
     <div action="form-group">
-        <label for="SearchText">Search by Offence Description:</label>
+        <label for="SearchText">@Html.DisplayNameFor(m => m.SearchText)</label>
         <input asp-for="SearchText" id="AutoComplete" class="form-control" placeholder="Enter offence description" autocomplete="off"/>
     </div>
 
     <div class="form-group mt-2">
-        <label asp-for="SpeedCode">Filter by Speed Code:</label>
+        <label asp-for="SpeedCode">@Html.DisplayNameFor(m => m.SpeedCode)</label>
         <select asp-for="SpeedCode" asp-items="Model.SpeedingCategories.Select(c => new SelectListItem { Value = c.SpeedCode, Text = c.SpeedDescription })" class="form-control">
             <option value="">All categories</option>
         </select>

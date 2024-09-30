@@ -192,7 +192,7 @@ namespace Assig1.Controllers
             var detailQuery = await (
                 from o in _context.Offences
                 join e in _context.Expiations on o.OffenceCode equals e.OffenceCode
-                where o.OffenceCode == offenceCode
+                where o.OffenceCode == offenceCode && (!startDate.HasValue || e.IncidentStartDate >= startDate) && (!endDate.HasValue || e.IncidentStartDate <= endDate)
                 select new
                 {
                     o.OffenceCode,
@@ -249,13 +249,6 @@ namespace Assig1.Controllers
                 .Select(x => x.Key)
                 .FirstOrDefault();
 
-            var dateFilteredExpiations = vm.Expiations
-                .Where(d => (!startDate.HasValue || d.IncidentStartDate >= startDate) &&
-                            (!endDate.HasValue || d.IncidentStartDate <= endDate))
-                .ToList();
-
-            vm.TotalExpiations = dateFilteredExpiations.Count();
-            vm.TotalFeePaid = dateFilteredExpiations.Sum(e => e.TotalFeeAmt ?? 0);
 
             return View(vm);
         }

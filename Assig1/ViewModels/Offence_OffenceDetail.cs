@@ -24,7 +24,11 @@ namespace Assig1.ViewModels
         [Display(Name = "Frequency (%)")]
         [DisplayFormat(DataFormatString = "{0:F2}")]
         public double Frequency { get; set; }
+
+        [Display(Name = "Most Common LSA Code")]
         public string? MostCommonLsaCode { get; set; }
+
+        [Display(Name = "Most Common State")]
         public string? MostCommonState {  get; set; }
     }
 }

@@ -14,7 +14,7 @@
     <div class="form-group mt-2">
         <label asp-for="SpeedCode">@Html.DisplayNameFor(m => m.SpeedCode)</label>
         <select asp-for="SpeedCode" asp-items="Model.SpeedingCategories.Select(c => new SelectListItem { Value = c.SpeedCode, Text = c.SpeedDescription })" class="form-control">
-            <option value="">All categories</option>
+            <option value="">Select a category</option>
         </select>
     </div>
 

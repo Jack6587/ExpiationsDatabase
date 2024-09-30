@@ -22,7 +22,6 @@ namespace Assig1.ViewModels
         public int TotalOffences { get; set; }
 
         [Display(Name = "Average Demerit Points In This Offence")]
-        [DisplayFormat(DataFormatString = "{0:F2}")]
         public double? AverageDemeritPoints { get; set; }
 
         [Display(Name = "Average Fee Paid In This Offence")]

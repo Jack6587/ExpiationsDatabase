@@ -30,5 +30,7 @@ namespace Assig1.ViewModels
 
         [Display(Name = "Most Common State")]
         public string? MostCommonState {  get; set; }
+
+        public IEnumerable<dynamic> MonthlyExpiations { get; set; }
     }
 }

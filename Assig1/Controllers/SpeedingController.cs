@@ -215,6 +215,13 @@ namespace Assig1.Controllers
 
             var monthlyExpiations = await _context.Expiations
                 .Where(e => e.OffenceCode == offenceCode)
+                .GroupBy(e => new { e.IncidentStartDate.Year, e.IncidentStartDate.Month })
+                .Select(g => new
+                {
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    Count = g.Count()
+                })
                 .ToListAsync();
 
             var vm = new Offence_OffenceDetail
@@ -230,7 +237,8 @@ namespace Assig1.Controllers
                    LsaCode = d.LsaCode,
                    DriverState = d.DriverState,
                    LocationSpeedLimit = d.LocationSpeedLimit
-                }).ToList()
+                }).ToList(),
+                MonthlyExpiations = monthlyExpiations
             };
 
             vm.TotalExpiations = vm.Expiations.Count();

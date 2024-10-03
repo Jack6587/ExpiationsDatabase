@@ -44,6 +44,19 @@
     </div>
 </div>
 
+<div id="monthly-expiations-chart"></div>
+<script>
+    // wait for everything to load
+    document.addEventListener("DOMContentLoaded", function () {
+        // get the expiation data from the model
+        const data = @Html.Raw(Json.Serialize(Model.MonthlyExpiations));
+
+        // preparing data for D3, so: an array of month objects for the x-axis and counts for the y-axis
+        const months = data.map(d => new Date(d.Year, d.Month - 1)); // note that January = 0 here, hence -1
+        const counts = data.map(d => d.Count);
+    })
+</script>
+
 <form method="get">
     <input type="hidden" name="offenceCode" value="@Model.OffenceCode" />
 

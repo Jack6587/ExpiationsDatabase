@@ -56,26 +56,26 @@
         const months = data.map(d => new Date(d.year, d.month - 1)); // note that January = 0 here, hence -1
         const counts = data.map(d => d.count);
 
-        console.log("Data:", data);
-        console.log("Counts:", counts);
-
         // establishes dimensions for SVG container
+        const margin = { top: 20, right: 30, bottom: 50, left: 50 };
         const svgWidth = 600;
         const svgHeight = 400;
 
         // create the SVG container with width and height
         const svg = d3.select('#monthly-expiations-chart')
             .append("svg")
-            .attr("width", svgWidth)
-            .attr("height", svgHeight)
+            .attr("width", svgWidth + margin.left + margin.right)
+            .attr("height", svgHeight + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
 
         const xScale = d3.scaleBand() // scale for the x-axis using months array
             .domain(months.map((d, i) => d.toLocaleString('default', { month: 'long' }) + ' ' + d.getFullYear())) // formatting the display date
             .range([0, svgWidth])
-            .padding(0.1);
+            .padding(0.2);
 
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(counts) || 0]) // sets the domain from 0 to max count
+            .domain([0, d3.max(counts)]) // sets the domain from 0 to max count
             .range([svgHeight, 0])
 
         svg.selectAll(".bar") // select all existing elements with bar class
@@ -86,7 +86,8 @@
             .attr("x", (d, i) => xScale(months[i].toLocaleString('default', { month: 'long' }) + ' ' + months[i].getFullYear())) // set x position based on xScale
             .attr("y", d => yScale(d)) // set y position based on yScale
             .attr("width", xScale.bandwidth()) // width established for each bar based on xScale bandwidth
-            .attr("height", d => svgHeight - yScale(d)); // height based on the yScale
+            .attr("height", d => svgHeight - yScale(d)) // height based on the yScale
+            .attr("fill", "black");
 
         svg.selectAll(".label")
             .data(counts)
@@ -94,7 +95,7 @@
             .append("text")
             .attr("class", "label")
             .attr("x", (d, i) => xScale(months[i].toLocaleString('default', { month: 'long' }) + ' ' + months[i].getFullYear()) + xScale.bandwidth() / 2)
-            .attr("y", d => yScale(d) + 15)
+            .attr("y", d => yScale(d) + (svgHeight - yScale(d)) / 2)
             .attr("text-anchor", "middle")
             .attr("fill", "white")
             .text(d => d);
@@ -102,11 +103,22 @@
         svg.append("g") // add a new group for the x-axis to the chart
             .attr("class", "x-axis") // class labelled as x-axis
             .attr("transform", `translate(0, ${svgHeight})`) // moves the x-axis to the bottom of the chart
-            .call(d3.axisBottom(xScale)); // creates the x-axis using the established xScale settings
+            .call(d3.axisBottom(xScale)) // creates the x-axis using the established xScale settings
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
 
         svg.append("g") // add a new group for the y-axis to the chart
             .attr("class", "y-axis") // class labelled as y-axis
             .call(d3.axisLeft(yScale)); // creates the y-axis using the established yScale settings
+
+        svg.append("text")
+            .attr("class", "y-axis-label")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -margin.left + 15)
+            .attr("x", -svgHeight / 2)
+            .attr("text-anchor", "middle")
+            .text("Count");
 
     });
 </script>

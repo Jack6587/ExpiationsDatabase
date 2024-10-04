@@ -50,10 +50,14 @@
     document.addEventListener("DOMContentLoaded", function () {
         // get the expiation data from the model
         const data = @Html.Raw(Json.Serialize(Model.MonthlyExpiations));
+        console.log(data);
 
         // preparing data for D3, so: an array of month objects for the x-axis and counts for the y-axis
         const months = data.map(d => new Date(d.Year, d.Month - 1)); // note that January = 0 here, hence -1
         const counts = data.map(d => d.Count);
+
+        console.log("Data:", data);
+        console.log("Counts:", counts);
 
         // establishes dimensions for SVG container
         const svgWidth = 600;
@@ -71,8 +75,27 @@
             .padding(0.1);
 
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(counts)]) // sets the domain from 0 to max count
+            .domain([0, d3.max(counts) || 0]) // sets the domain from 0 to max count
             .range([svgHeight, 0])
+
+        svg.selectAll(".bar") // select all existing elements with bar class
+            .data(counts) // binds the count array (above) to the selected elements
+            .enter()
+            .append("rect") // creates a rectangle for each point of data
+            .attr("class", "bar") // each new rectangle is set to the bar class
+            .attr("x", (d, i) => xScale(months[i].toLocaleString('default', { month: 'long' }) + ' ' + months[i].getFullYear())) // set x position based on xScale
+            .attr("y", d => yScale(d)) // set y position based on yScale
+            .attr("width", xScale.bandwidth()) // width established for each bar based on xScale bandwidth
+            .attr("height", d => svgHeight - yScale(d)); // height based on the yScale
+
+        svg.append("g") // add a new group for the x-axis to the chart
+            .attr("class", "x-axis") // class labelled as x-axis
+            .attr("transform", `translate(0, ${svgHeight})`) // moves the x-axis to the bottom of the chart
+            .call(d3.axisBottom(xScale)); // creates the x-axis using the established xScale settings
+
+        svg.append("g") // add a new group for the y-axis to the chart
+            .attr("class", "y-axis") // class labelled as y-axis
+            .call(d3.axisLeft(yScale)); // creates the y-axis using the established yScale settings
 
     });
 </script>

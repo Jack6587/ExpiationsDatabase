@@ -53,8 +53,8 @@
         console.log(data);
 
         // preparing data for D3, so: an array of month objects for the x-axis and counts for the y-axis
-        const months = data.map(d => new Date(d.Year, d.Month - 1)); // note that January = 0 here, hence -1
-        const counts = data.map(d => d.Count);
+        const months = data.map(d => new Date(d.year, d.month - 1)); // note that January = 0 here, hence -1
+        const counts = data.map(d => d.count);
 
         console.log("Data:", data);
         console.log("Counts:", counts);

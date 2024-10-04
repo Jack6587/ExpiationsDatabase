@@ -88,6 +88,17 @@
             .attr("width", xScale.bandwidth()) // width established for each bar based on xScale bandwidth
             .attr("height", d => svgHeight - yScale(d)); // height based on the yScale
 
+        svg.selectAll(".label")
+            .data(counts)
+            .enter()
+            .append("text")
+            .attr("class", "label")
+            .attr("x", (d, i) => xScale(months[i].toLocaleString('default', { month: 'long' }) + ' ' + months[i].getFullYear()) + xScale.bandwidth() / 2)
+            .attr("y", d => yScale(d) + 15)
+            .attr("text-anchor", "middle")
+            .attr("fill", "white")
+            .text(d => d);
+
         svg.append("g") // add a new group for the x-axis to the chart
             .attr("class", "x-axis") // class labelled as x-axis
             .attr("transform", `translate(0, ${svgHeight})`) // moves the x-axis to the bottom of the chart

@@ -54,7 +54,27 @@
         // preparing data for D3, so: an array of month objects for the x-axis and counts for the y-axis
         const months = data.map(d => new Date(d.Year, d.Month - 1)); // note that January = 0 here, hence -1
         const counts = data.map(d => d.Count);
-    })
+
+        // establishes dimensions for SVG container
+        const svgWidth = 600;
+        const svgHeight = 400;
+
+        // create the SVG container with width and height
+        const svg = d3.select('#monthly-expiations-chart')
+            .append("svg")
+            .attr("width", svgWidth)
+            .attr("height", svgHeight)
+
+        const xScale = d3.scaleBand() // scale for the x-axis using months array
+            .domain(months.map((d, i) => d.toLocaleString('default', { month: 'long' }) + ' ' + d.getFullYear())) // formatting the display date
+            .range([0, svgWidth])
+            .padding(0.1);
+
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(counts)]) // sets the domain from 0 to max count
+            .range([svgHeight, 0])
+
+    });
 </script>
 
 <form method="get">

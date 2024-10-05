@@ -26,15 +26,7 @@
     <button type="submit">Search</button>
 </form>
 
-<div>
-    @foreach (var state in Model.TotalOffenceCountByState)
-    {
-        <h3>@state.Key</h3>
-        <p>Total Offences: @state.Value</p>
-    }
-</div>
-
-<h3>Expiations</h3>
+<h3>Total Expiations by State</h3>
 <div id="expiations-by-state-chart"></div>
 <script>
     // wait for everything to load
@@ -122,7 +114,21 @@
 
 @if(Model.TotalExpiations > 0)
 {
-    <h3>Statistics</h3>
+    @if(!string.IsNullOrWhiteSpace(Model.SearchLsaText) || !string.IsNullOrWhiteSpace(Model.OffenceCode))
+    {
+        @if (!string.IsNullOrWhiteSpace(Model.SearchLsaText) && !string.IsNullOrWhiteSpace(Model.OffenceCode))
+        {
+            <h3>Statistics for Offence Code: @Model.OffenceCode and LSA Code: @Model.SearchLsaText</h3>
+        }
+        else if (!string.IsNullOrWhiteSpace(Model.OffenceCode))
+        {
+            <h3>Statistics for Offence Code: @Model.OffenceCode</h3>
+        }
+        else if(!string.IsNullOrWhiteSpace(Model.SearchLsaText))
+        {
+            <h3>Statistics for LSA Code: @Model.SearchLsaText</h3>
+        }
+    }
     <ul>
         <li>Total Expiations : @Model.TotalExpiations</li>
         <li>Max Speed : @Model.MaxSpeed km/h</li>

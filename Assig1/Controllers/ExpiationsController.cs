@@ -81,8 +81,8 @@ namespace Assig1.Controllers
                 vm.CurrentPage = page;
                 vm.TotalPages = expiations.PageCount;
                 vm.Expiations = expiations;
-                vm.SearchLsaText = searchLsaText;
-                vm.OffenceCode = offenceCode;
+                vm.SearchLsaText = searchLsaText?.ToUpper();
+                vm.OffenceCode = offenceCode?.ToUpper();
             }
             else
             {

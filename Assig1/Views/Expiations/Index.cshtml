@@ -27,6 +27,13 @@
 </form>
 
 <h3>Expiations</h3>
+<div>
+    @foreach (var state in Model.TotalOffenceCountByState)
+    {
+        <h3>@state.Key</h3>
+        <p>Total Offences: @state.Value</p>
+    }
+</div>
 @if(Model.TotalExpiations > 0)
 {
     <h3>Statistics</h3>

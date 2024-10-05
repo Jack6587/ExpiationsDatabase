@@ -32,12 +32,7 @@ namespace Assig1.Controllers
 
             var offencesBySpeedCode = categories
                 .GroupBy(sc => sc.SpeedCode)
-                .Select(group => new
-                {
-                    SpeedCode = group.Key,
-                    OffenceCount = group.Count(sc => _context.Offences.Any(o => o.OffenceCode == sc.OffenceCode))
-                })
-                .ToList();
+                .ToDictionary(group => group.Key, group => group.Count(sc => _context.Offences.Any(o => o.OffenceCode == sc.OffenceCode)));
 
 
             if (!string.IsNullOrWhiteSpace(vm.SearchText) || !string.IsNullOrWhiteSpace(vm.SpeedCode) || !string.IsNullOrWhiteSpace(vm.OffenceCode))
@@ -75,6 +70,7 @@ namespace Assig1.Controllers
                 vm.Offences = offences;
                 vm.CurrentPage = page;
                 vm.TotalPages = offences.PageCount;
+                vm.OffencesBySpeedCode = offencesBySpeedCode;
             }
 
             return View(vm);

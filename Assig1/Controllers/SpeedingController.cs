@@ -30,7 +30,7 @@ namespace Assig1.Controllers
                 .Select(group => group.First())
                 .ToList();
 
-            if(!string.IsNullOrWhiteSpace(vm.SearchText) || !string.IsNullOrWhiteSpace(vm.SpeedCode))
+            if (!string.IsNullOrWhiteSpace(vm.SearchText) || !string.IsNullOrWhiteSpace(vm.SpeedCode) || !string.IsNullOrWhiteSpace(vm.OffenceCode))
             {
                 var offencesQuery = _context.Offences.AsQueryable();
 
@@ -49,6 +49,12 @@ namespace Assig1.Controllers
                 
                     offencesQuery = offencesQuery
                         .Where(o => offenceCodes.Contains(o.OffenceCode));
+                }
+
+                if (!string.IsNullOrWhiteSpace(vm.OffenceCode))
+                {
+                    offencesQuery = offencesQuery
+                        .Where(o => o.OffenceCode.Contains(vm.OffenceCode));
                 }
 
                 int pageSize = 10;

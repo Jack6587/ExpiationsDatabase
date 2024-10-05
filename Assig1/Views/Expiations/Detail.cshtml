@@ -1,17 +1,48 @@
 ﻿@model Assig1.ViewModels.Expiation_ExpiationDetail
 
-<h2>Expiation Detail for: @Model.Expiation.ExpId</h2>
+<div class="container mt-4">
+    <h2 class="text-center">Expiation Detail for: @Model.Expiation.ExpId</h2>
 
-<div>
-    <p>@Html.DisplayNameFor(m => m.DriverStateCount): @Model.DriverStateCount</p>
-    <p>@Html.DisplayNameFor(m => m.LsaCount): @Model.LsaCount</p>
-    <p>@Html.DisplayNameFor(m => m.SpeedPercentile): @Html.DisplayFor(m => m.SpeedPercentile)</p>
-    <p>@Html.DisplayNameFor(m => m.BacPercentile): @Html.DisplayFor(m => m.BacPercentile)</p>
-    <p>Expiation ID: @Model.Expiation.ExpId</p>
-    <p>Total Fee: $@Model.Expiation.TotalFeeAmt</p>
-    <p>Time: @Model.Expiation.IncidentStartTime</p>
-    <p>Date: @Model.Expiation.IncidentStartDate</p>
-    <p>Speed: @Model.Expiation.VehicleSpeed km/h</p>
-    <p>LSA Code: @Model.Expiation.LsaCode</p>
-    <p>State: @Model.Expiation.DriverState</p>
+    <div class="card">
+        <div class="card-header">
+            <h5>Expiation Information</h5>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p>@Html.DisplayNameFor(m => m.DriverStateCount): @Model.DriverStateCount</p>
+                </li>
+                <li class="list-group-item">
+                    <p>@Html.DisplayNameFor(m => m.LsaCount): @Model.LsaCount</p>
+                </li>
+                <li class="list-group-item">
+                    <p>@Html.DisplayNameFor(m => m.SpeedPercentile): @Html.DisplayFor(m => m.SpeedPercentile)</p>
+                </li>
+                <li class="list-group-item">
+                    <p>@Html.DisplayNameFor(m => m.BacPercentile): @Html.DisplayFor(m => m.BacPercentile)</p>
+                </li>
+                <li class="list-group-item">
+                    <p>Expiation ID: @Model.Expiation.ExpId</p>
+                </li>
+                <li class="list-group-item">
+                    <p>Total Fee: $@Model.Expiation.TotalFeeAmt</p>
+                </li>
+                <li class="list-group-item">
+                    <p>Time: @Model.Expiation.IncidentStartTime</p>
+                </li>
+                <li class="list-group-item">
+                    <p>Date: @Model.Expiation.IncidentStartDate</p>
+                </li>
+                <li class="list-group-item">
+                    <p>Speed: @Model.Expiation.VehicleSpeed km/h</p>
+                </li>
+                <li class="list-group-item">
+                    <p>LSA Code: @Model.Expiation.LsaCode</p>
+                </li>
+                <li class="list-group-item">
+                    <p>State: @Model.Expiation.DriverState</p>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>

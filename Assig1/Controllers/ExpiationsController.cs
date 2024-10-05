@@ -19,6 +19,8 @@ namespace Assig1.Controllers
 
         public async Task<IActionResult> Index(string searchLsaText, string offenceCode, int page = 1, string sortOrder = "default")
         {
+            ViewBag.Active = "Expiations";
+
             var vm = new ExpiationsSearchViewModel();
 
             if (!string.IsNullOrWhiteSpace(searchLsaText) || !string.IsNullOrWhiteSpace(offenceCode))

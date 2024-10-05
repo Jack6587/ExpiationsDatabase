@@ -19,6 +19,8 @@ namespace Assig1.Controllers
 
         public IActionResult Index(SpeedingCategoriesSearchViewModel vm, int page = 1)
         {
+            ViewBag.Active = "Speeding";
+
             var categories = _context.SpeedingCategories
                 .OrderBy(sc => sc.SpeedCode)
                 .ToList();

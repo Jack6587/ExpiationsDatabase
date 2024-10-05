@@ -30,6 +30,16 @@ namespace Assig1.Controllers
                 .Select(group => group.First())
                 .ToList();
 
+            var offencesBySpeedCode = categories
+                .GroupBy(sc => sc.SpeedCode)
+                .Select(group => new
+                {
+                    SpeedCode = group.Key,
+                    OffenceCount = group.Count(sc => _context.Offences.Any(o => o.OffenceCode == sc.OffenceCode))
+                })
+                .ToList();
+
+
             if (!string.IsNullOrWhiteSpace(vm.SearchText) || !string.IsNullOrWhiteSpace(vm.SpeedCode) || !string.IsNullOrWhiteSpace(vm.OffenceCode))
             {
                 var offencesQuery = _context.Offences.AsQueryable();

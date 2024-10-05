@@ -32,5 +32,8 @@ namespace Assig1.ViewModels
         [Display(Name = "Highest Fee Paid In This Offence")]
         [DisplayFormat(DataFormatString = "{0:C}")]
         public int? HighestFeePaid { get; set; }
+
+        [Display(Name = "Section ID")]
+        public int? SectionID { get; set; }
     }
 }

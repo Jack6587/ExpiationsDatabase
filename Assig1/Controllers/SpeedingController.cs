@@ -84,6 +84,7 @@ namespace Assig1.Controllers
                     o.Description,
                     o.ExpiationFee,
                     o.DemeritPoints,
+                    o.SectionId,
                     SpeedCodeCategory = _context.SpeedingCategories
                         .Where(sc => sc.OffenceCode == o.OffenceCode)
                         .Select(sc => sc.SpeedCode)
@@ -134,6 +135,7 @@ namespace Assig1.Controllers
                 Description = offence.Description,
                 ExpiationFee = offence.ExpiationFee,
                 DemeritPoints = offence.DemeritPoints,
+                SectionID = offence.SectionId,
                 AverageFeePaid = averageFee,
                 TotalOffences = totalOffences,
                 AverageDemeritPoints = averageDemerit,

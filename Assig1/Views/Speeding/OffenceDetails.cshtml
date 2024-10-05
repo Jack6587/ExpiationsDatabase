@@ -84,10 +84,16 @@
             .append("rect") // creates a rectangle for each point of data
             .attr("class", "bar") // each new rectangle is set to the bar class
             .attr("x", (d, i) => xScale(months[i].toLocaleString('default', { month: 'long' }) + ' ' + months[i].getFullYear())) // set x position based on xScale
-            .attr("y", d => yScale(d)) // set y position based on yScale
+            .attr("y", svgHeight) // starts the bar at the bottom
             .attr("width", xScale.bandwidth()) // width established for each bar based on xScale bandwidth
+            .attr("height", 0) // sets initial height to 0
+            .attr("fill", (d) => {
+                return `hsl(240, 100%, ${(100 - d / d3.max(counts))}%)` // setting the colours
+            })
+            .transition().duration(1000) // starts and determines the length of the animation (1s)
+            .delay((d, i) => i * 100)
+            .attr("y", d => yScale(d)) // set y position based on yScale
             .attr("height", d => svgHeight - yScale(d)) // height based on the yScale
-            .attr("fill", "black");
 
         svg.selectAll(".label")
             .data(counts)
@@ -95,9 +101,10 @@
             .append("text")
             .attr("class", "label")
             .attr("x", (d, i) => xScale(months[i].toLocaleString('default', { month: 'long' }) + ' ' + months[i].getFullYear()) + xScale.bandwidth() / 2)
-            .attr("y", d => yScale(d) + (svgHeight - yScale(d)) / 2)
+            .attr("y", d => yScale(d) + 20)
             .attr("text-anchor", "middle")
             .attr("fill", "white")
+            .attr("font-weight", "bold")
             .text(d => d);
 
         svg.append("g") // add a new group for the x-axis to the chart

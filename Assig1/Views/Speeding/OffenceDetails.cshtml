@@ -88,7 +88,7 @@
             .attr("width", xScale.bandwidth()) // width established for each bar based on xScale bandwidth
             .attr("height", 0) // sets initial height to 0
             .attr("fill", (d) => {
-                return `hsl(240, 100%, ${(100 - d / d3.max(counts))}%)` // setting the colours
+                return `hsl(240, 100%, ${(70 - d / d3.max(counts) * 40)}%)` // setting the colours
             })
             .transition().duration(1000) // starts and determines the length of the animation (1s)
             .delay((d, i) => i * 100)

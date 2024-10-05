@@ -222,6 +222,7 @@ namespace Assig1.Controllers
                     Month = g.Key.Month,
                     Count = g.Count()
                 })
+                .OrderBy(g => g.Month)
                 .ToListAsync();
 
             var vm = new Offence_OffenceDetail

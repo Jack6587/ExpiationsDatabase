@@ -25,6 +25,10 @@ namespace Assig1.Controllers
 
             var expiationsQuery = _context.Expiations.AsQueryable();
 
+            vm.TotalOffenceCountByState = await _context.Expiations
+                .GroupBy(e => e.DriverState)
+                .ToDictionaryAsync(g => g.Key, g => g.Count());
+
             if (!string.IsNullOrWhiteSpace(searchLsaText) || !string.IsNullOrWhiteSpace(offenceCode))
             {
 
@@ -79,10 +83,6 @@ namespace Assig1.Controllers
                 vm.Expiations = expiations;
                 vm.SearchLsaText = searchLsaText;
                 vm.OffenceCode = offenceCode;
-
-                vm.TotalOffenceCountByState = await _context.Expiations
-                    .GroupBy(e => e.DriverState)
-                    .ToDictionaryAsync(g => g.Key, g => g.Count()); ;
             }
             else
             {

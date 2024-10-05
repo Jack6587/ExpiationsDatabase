@@ -16,6 +16,8 @@ namespace Assig1.ViewModels
         public IPagedList<Offence> Offences { get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+
+        [Display(Name = "Search by Offence Code:")]
         public string OffenceCode { get; set; }
     }
 }

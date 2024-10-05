@@ -26,7 +26,6 @@
     <button type="submit">Search</button>
 </form>
 
-<h3>Expiations</h3>
 <div>
     @foreach (var state in Model.TotalOffenceCountByState)
     {
@@ -34,6 +33,93 @@
         <p>Total Offences: @state.Value</p>
     }
 </div>
+
+<h3>Expiations</h3>
+<div id="expiations-by-state-chart"></div>
+<script>
+    // wait for everything to load
+    document.addEventListener("DOMContentLoaded", function () {
+        // get the expiation data from the model
+        const data = @Html.Raw(Json.Serialize(Model.TotalOffenceCountByState));
+        console.log(data);
+
+        const states = Object.keys(data);
+        const counts = Object.values(data);
+
+        // establishes dimensions for SVG container
+        const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+        const svgWidth = 600;
+        const svgHeight = 400;
+
+        // create the SVG container with width and height
+        const svg = d3.select('#expiations-by-state-chart')
+            .append("svg")
+            .attr("width", svgWidth + margin.left + margin.right)
+            .attr("height", svgHeight + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const xScale = d3.scaleBand() // scale for the x-axis using months array
+            .domain(states)
+            .range([0, svgWidth])
+            .padding(0.2);
+
+        const yScale = d3.scaleLog()
+            .domain([1, d3.max(counts)]) // sets the domain from 0 to max count
+            .range([svgHeight, 0])
+
+        svg.selectAll(".bar") // select all existing elements with bar class
+            .data(counts) // binds the count array (above) to the selected elements
+            .enter()
+            .append("rect") // creates a rectangle for each point of data
+            .attr("class", "bar") // each new rectangle is set to the bar class
+            .attr("x", (d, i) => xScale(states[i])) // set x position based on xScale
+            .attr("y", svgHeight) // starts the bar at the bottom
+            .attr("width", xScale.bandwidth()) // width established for each bar based on xScale bandwidth
+            .attr("height", 0) // sets initial height to 0
+            .attr("fill", (d) => {
+                return `hsl(240, 100%, ${(70 - d / d3.max(counts) * 40)}%)` // setting the colours
+            })
+            .transition().duration(1000) // starts and determines the length of the animation (1s)
+            .delay((d, i) => i * 100)
+            .attr("y", d => yScale(d)) // set y position based on yScale
+            .attr("height", d => svgHeight - yScale(d)) // height based on the yScale
+
+        svg.selectAll(".label")
+            .data(counts)
+            .enter()
+            .append("text")
+            .attr("class", "label")
+            .attr("x", (d, i) => xScale(states[i]) + xScale.bandwidth() / 2)
+            .attr("y", d => yScale(d) + 20)
+            .attr("text-anchor", "middle")
+            .attr("fill", "white")
+            .attr("font-weight", "bold")
+            .text(d => d);
+
+        svg.append("g") // add a new group for the x-axis to the chart
+            .attr("class", "x-axis") // class labelled as x-axis
+            .attr("transform", `translate(0, ${svgHeight})`) // moves the x-axis to the bottom of the chart
+            .call(d3.axisBottom(xScale)) // creates the x-axis using the established xScale settings
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
+
+        svg.append("g") // add a new group for the y-axis to the chart
+            .attr("class", "y-axis") // class labelled as y-axis
+            .call(d3.axisLeft(yScale)); // creates the y-axis using the established yScale settings
+
+        svg.append("text")
+            .attr("class", "y-axis-label")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -margin.left + 15)
+            .attr("x", -svgHeight / 2)
+            .attr("text-anchor", "middle")
+            .text("Count");
+
+    });
+</script>
+
 @if(Model.TotalExpiations > 0)
 {
     <h3>Statistics</h3>

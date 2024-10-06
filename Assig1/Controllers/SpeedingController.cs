@@ -4,7 +4,7 @@ using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using X.PagedList;
+using Assig1.Helpers;
 
 namespace Assig1.Controllers
 {
@@ -17,7 +17,7 @@ namespace Assig1.Controllers
             _context = context;
         }
 
-        public IActionResult Index(SpeedingCategoriesSearchViewModel vm, int page = 1)
+        public async Task<IActionResult> Index(SpeedingCategoriesSearchViewModel vm, int page = 1)
         {
             ViewBag.Active = "Speeding";
 
@@ -64,13 +64,10 @@ namespace Assig1.Controllers
                 vm.TotalResults = offencesQuery.Count();
 
                 int pageSize = 10;
-                var offences = offencesQuery
-                    .OrderBy(o => o.Description)
-                    .ToPagedList(page, pageSize);
-
-                vm.Offences = offences;
-                vm.CurrentPage = page;
-                vm.TotalPages = offences.PageCount;
+                vm.Offences = await PaginatedList<Offence>.CreateAsync(offencesQuery.OrderBy(o => o.Description), page, pageSize);
+                
+                vm.CurrentPage = vm.Offences.PageIndex;
+                vm.TotalPages = vm.Offences.TotalPages;
             }
 
             return View(vm);

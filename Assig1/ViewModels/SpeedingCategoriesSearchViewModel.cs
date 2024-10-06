@@ -1,6 +1,6 @@
-﻿using Assig1.Models;
+﻿using Assig1.Helpers;
+using Assig1.Models;
 using System.ComponentModel.DataAnnotations;
-using X.PagedList;
 
 namespace Assig1.ViewModels
 {
@@ -13,7 +13,7 @@ namespace Assig1.ViewModels
         [Display(Name = "Filter by Speed Code")]
         public string? SpeedCode { get; set; }
         public List<SpeedingCategory> SpeedingCategories { get; set; }
-        public IPagedList<Offence> Offences { get; set; }
+        public PaginatedList<Offence> Offences { get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
 

@@ -200,7 +200,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> OffenceDetails(string offenceCode, DateOnly? startDate, DateOnly? endDate)
+        public async Task<IActionResult> OffenceDetails(string offenceCode, DateOnly? startDate, DateOnly? endDate, int page = 1)
         {
             var detailQuery = await (
                 from o in _context.Offences
@@ -270,7 +270,6 @@ namespace Assig1.Controllers
                 .OrderByDescending(g => g.Count())
                 .Select(x => x.Key)
                 .FirstOrDefault();
-
 
             return View(vm);
         }

@@ -6,12 +6,12 @@
 
 <form method="get" asp-action="Index" asp-controller="Expiations">
     <div class="form-group">
-        <label for="searchLsaText">Search by LSA Code: </label>
-        <input type="text" id="searchLsaText" name="searchLsaText" class="form-control" placeholder="Search LSA Codes..." value="@Model.SearchLsaText" />
+        <label asp-for="SearchLsaText"></label>
+        <input asp-for="SearchLsaText" class="form-control" placeholder="Search LSA Codes..." value="@Model.SearchLsaText" />
     </div>
     <div class="form-group">
-        <label for="offenceCode">Search by Offence Code: </label>
-        <input type="text" id="offenceCode" name="offenceCode" class="form-control" placeholder="Search Offence Codes..." value="@Model.OffenceCode" />
+        <label asp-for="OffenceCode"></label>
+        <input asp-for="OffenceCode" class="form-control" placeholder="Search Offence Codes..." value="@Model.OffenceCode" />
     </div>
 
     <select name="sortOrder" id="sortOrder">

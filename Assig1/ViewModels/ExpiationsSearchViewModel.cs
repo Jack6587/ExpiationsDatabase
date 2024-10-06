@@ -1,5 +1,6 @@
 ﻿using Assig1.Models;
 using Assig1.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace Assig1.ViewModels
 {
@@ -7,7 +8,13 @@ namespace Assig1.ViewModels
     {
         public PaginatedList<Expiation> Expiations { get; set; }
         public Dictionary<string?, int> TotalOffenceCountByState { get; set; } = new Dictionary<string?, int>();
+
+        [Display(Name = "Search by LSA Code")]
+        [StringLength(20, ErrorMessage = "LSA Code must not exceed 20 characters.")]
         public string SearchLsaText { get; set; }
+
+        [Display(Name = "Search by Offence Code")]
+        [StringLength(20, ErrorMessage = "Offence Code must not exceed 20 characters")]
         public string OffenceCode { get; set; }
         public string SortOrder { get; set; }
         public int TotalExpiations { get; set; }

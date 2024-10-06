@@ -20,5 +20,6 @@ namespace Assig1.ViewModels
         [Display(Name = "Search by Offence Code:")]
         public string OffenceCode { get; set; }
         public Dictionary<string, int> OffencesBySpeedCode { get; set; } = new Dictionary<string, int>();
+        public int TotalResults { get; set; }
     }
 }

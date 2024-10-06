@@ -61,6 +61,8 @@ namespace Assig1.Controllers
                         .Where(o => o.OffenceCode.Contains(vm.OffenceCode));
                 }
 
+                vm.TotalResults = offencesQuery.Count();
+
                 int pageSize = 10;
                 var offences = offencesQuery
                     .OrderBy(o => o.Description)

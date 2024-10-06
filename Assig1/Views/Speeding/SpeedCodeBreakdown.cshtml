@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<Assig1.ViewModels.SpeedCodeBreakdownViewModel>
 
-<h2>Data Breakdown for Speed Code @ViewContext.HttpContext.Request.Query["speedCode"]</h2>
+<h2>Data Breakdown for Speed Code @Model.FirstOrDefault()?.SpeedCode</h2>
 
 <form method="get">
-    <input type="hidden" name="speedCode" value="@ViewContext.HttpContext.Request.Query["speedCode"]" />
+    <input type="hidden" name="speedCode" value="@Model.FirstOrDefault()?.SpeedCode" />
     
     <label for="sortOrder">Sort By: </label>
     <select name="sortOrder" id="sortOrder">
@@ -21,11 +21,11 @@
     <table class="table">
     <thead>
         <tr>
-            <th>Offence Code</th>
-            <th>Description</th>
-            <th>Speed Type</th>
-            <th>Average Fee Amount</th>
-            <th>Offence Occurence</th>
+            <th>@Html.DisplayNameFor(m => m.First().OffenceCode)</th>
+            <th>@Html.DisplayNameFor(m => m.First().Description)</th>
+            <th>@Html.DisplayNameFor(m => m.First().SpeedDescription)</th>
+            <th>@Html.DisplayNameFor(m => m.First().AverageFeeAmt)</th>
+            <th>@Html.DisplayNameFor(m => m.First().OffenceCount)</th>
         </tr>
     </thead>
     <tbody>

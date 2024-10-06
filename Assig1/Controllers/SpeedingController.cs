@@ -171,7 +171,8 @@ namespace Assig1.Controllers
                             Description = g.Key.Description,
                             SpeedDescription = g.Key.SpeedDescription,
                             AverageFeeAmt = g.Average(x => x.e.TotalFeeAmt),
-                            OffenceCount = g.Count()
+                            OffenceCount = g.Count(),
+                            SpeedCode = speedCode
                         }).OrderByDescending(d => d.OffenceCount)
                         .ToListAsync();
 
@@ -200,7 +201,7 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> OffenceDetails(string offenceCode, DateOnly? startDate, DateOnly? endDate, int page = 1)
+        public async Task<IActionResult> OffenceDetails(string offenceCode, DateOnly? startDate, DateOnly? endDate)
         {
             var detailQuery = await (
                 from o in _context.Offences
@@ -270,6 +271,7 @@ namespace Assig1.Controllers
                 .OrderByDescending(g => g.Count())
                 .Select(x => x.Key)
                 .FirstOrDefault();
+
 
             return View(vm);
         }

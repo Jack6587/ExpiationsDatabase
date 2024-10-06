@@ -1,11 +1,11 @@
 ﻿using Assig1.Models;
-using X.PagedList;
+using Assig1.Helpers;
 
 namespace Assig1.ViewModels
 {
     public class ExpiationsSearchViewModel
     {
-        public IPagedList<Expiation> Expiations { get; set; }
+        public PaginatedList<Expiation> Expiations { get; set; }
         public Dictionary<string?, int> TotalOffenceCountByState { get; set; } = new Dictionary<string?, int>();
         public string SearchLsaText { get; set; }
         public string OffenceCode { get; set; }

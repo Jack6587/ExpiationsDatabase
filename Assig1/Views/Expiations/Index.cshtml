@@ -175,12 +175,12 @@
 
     @if (Model.Expiations.HasPreviousPage)
     {
-        <a asp-controller="Expiations" asp-action="Index" asp-route-SearchLsaText="@Model.SearchLsaText" asp-route-OffenceCode="@Model.OffenceCode" asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Expiations.PageNumber - 1)">Previous</a>
+        <a asp-controller="Expiations" asp-action="Index" asp-route-SearchLsaText="@Model.SearchLsaText" asp-route-OffenceCode="@Model.OffenceCode" asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Expiations.PageIndex - 1)">Previous</a>
 
     }
-    @for (int i = 1; i <= Model.Expiations.PageCount; i++)
+    @for (int i = 1; i <= Model.Expiations.TotalPages; i++)
     {
-        if (i == Model.Expiations.PageNumber)
+        if (i == Model.Expiations.PageIndex)
         {
             <strong>@i</strong>
         }
@@ -192,7 +192,7 @@
 
     @if (Model.Expiations.HasNextPage)
     {
-        <a asp-controller="Expiations" asp-action="Index" asp-route-SearchLsaText="@Model.SearchLsaText" asp-route-OffenceCode="@Model.OffenceCode" asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Expiations.PageNumber + 1)">Next</a>
+        <a asp-controller="Expiations" asp-action="Index" asp-route-SearchLsaText="@Model.SearchLsaText" asp-route-OffenceCode="@Model.OffenceCode" asp-route-sortOrder="@Model.SortOrder" asp-route-page="@(Model.Expiations.PageIndex + 1)">Next</a>
     }
 }
 else

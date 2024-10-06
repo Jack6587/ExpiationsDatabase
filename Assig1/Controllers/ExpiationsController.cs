@@ -4,6 +4,7 @@ using Assig1.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Assig1.Helpers;
 using X.PagedList;
 
 namespace Assig1.Controllers
@@ -75,19 +76,17 @@ namespace Assig1.Controllers
                 vm.SortOrder = sortOrder;
 
                 int pageSize = 200;
-                var expiations = expiationsQuery
-                    .ToPagedList(page, pageSize);
-
+                vm.Expiations = await PaginatedList<Expiation>.CreateAsync(expiationsQuery, page, pageSize);
                 vm.CurrentPage = page;
-                vm.TotalPages = expiations.PageCount;
-                vm.Expiations = expiations;
+                vm.TotalPages = vm.Expiations.TotalPages;
                 vm.SearchLsaText = searchLsaText?.ToUpper();
                 vm.OffenceCode = offenceCode?.ToUpper();
             }
             else
             {
+                // if no search criteria
                 vm.TotalExpiations = 0;
-                vm.Expiations = new PagedList<Expiation>(new List<Expiation>(), page, 1);
+                vm.Expiations = new PaginatedList<Expiation>(new List<Expiation>(), page, 1, 0); // creates empty PaginatedList
             }
 
             return View(vm);

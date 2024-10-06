@@ -19,34 +19,35 @@ namespace Assig1.Controllers
 
         public async Task<IActionResult> Index(SpeedingCategoriesSearchViewModel vm, int page = 1)
         {
-            ViewBag.Active = "Speeding";
+            ViewBag.Active = "Speeding"; // sets the active tab in the nav bar to be "Speeding"
 
-            var categories = _context.SpeedingCategories
+            var categories = _context.SpeedingCategories // fetch speed categories and order by speed code
                 .OrderBy(sc => sc.SpeedCode)
                 .ToList();
 
-            vm.SpeedingCategories = categories
+            vm.SpeedingCategories = categories // groups categories by speed description, ensuring they are unique
                 .GroupBy(sc => sc.SpeedDescription)
                 .Select(group => group.First())
                 .ToList();
 
-            vm.OffencesBySpeedCode = categories
+            vm.OffencesBySpeedCode = categories // count the total number of offences for each speed code
                 .GroupBy(sc => sc.SpeedCode)
                 .ToDictionary(group => group.Key, group => group.Count(sc => _context.Offences.Any(o => o.OffenceCode == sc.OffenceCode)));
 
+            // if search filters (user input) is entered, filters the offences
             if (!string.IsNullOrWhiteSpace(vm.SearchText) || !string.IsNullOrWhiteSpace(vm.SpeedCode) || !string.IsNullOrWhiteSpace(vm.OffenceCode))
             {
                 var offencesQuery = _context.Offences.AsQueryable();
 
                 if (!string.IsNullOrWhiteSpace(vm.SearchText))
                 {
-                    offencesQuery = offencesQuery
+                    offencesQuery = offencesQuery // filter by description if search text (which represents the description) is provided
                         .Where(o => o.Description.Contains(vm.SearchText));
                 }
 
                 if (!string.IsNullOrWhiteSpace(vm.SpeedCode))
                 {
-                    var offenceCodes = _context.SpeedingCategories
+                    var offenceCodes = _context.SpeedingCategories // filters by speed code (which is a drop down bar in the view)
                         .Where(sc => sc.SpeedCode == vm.SpeedCode)
                         .Select(sc => sc.OffenceCode)
                         .ToList();
@@ -57,15 +58,17 @@ namespace Assig1.Controllers
 
                 if (!string.IsNullOrWhiteSpace(vm.OffenceCode))
                 {
-                    offencesQuery = offencesQuery
+                    offencesQuery = offencesQuery // filter for offence code input - ensures that any value can be entered to match, rather than just a full offence code
                         .Where(o => o.OffenceCode.Contains(vm.OffenceCode));
                 }
 
-                vm.TotalResults = offencesQuery.Count();
+                vm.TotalResults = offencesQuery.Count(); // count all results
 
+                // pagination -> here, only 10 results are displayed per page, hence pageSize = 10
                 int pageSize = 10;
                 vm.Offences = await PaginatedList<Offence>.CreateAsync(offencesQuery.OrderBy(o => o.Description), page, pageSize);
                 
+                // update the current page and total pages for the VM
                 vm.CurrentPage = vm.Offences.PageIndex;
                 vm.TotalPages = vm.Offences.TotalPages;
             }
@@ -74,20 +77,20 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> SearchSuggestions(string inputString)
+        public async Task<IActionResult> SearchSuggestions(string inputString) // autocorrect
         {
-            var suggestions = await _context.Offences
+            var suggestions = await _context.Offences // gets offences where the description contains the input string
                 .Where(o => o.Description.Contains(inputString))
                 .Select(o => o.Description)
                 .ToListAsync();
 
-            return Json(suggestions);
+            return Json(suggestions); // displays suggestions as JSON for autocorrect
         }
 
         [HttpGet]
-        public async Task<IActionResult> SpeedingDetails(string offenceCode)
+        public async Task<IActionResult> SpeedingDetails(string offenceCode) // get details for a specific offence
         {
-            var offence = await _context.Offences
+            var offence = await _context.Offences // get the offence details based on the input offence code
                 .Where(o => o.OffenceCode == offenceCode)
                 .Select(o => new
                 {
@@ -103,11 +106,12 @@ namespace Assig1.Controllers
                 })
                 .FirstOrDefaultAsync();
 
-            if(offence == null)
+            if(offence == null) // 404 error if offence not found
             {
                 return NotFound();
             }
 
+            // aggregate data below
             var totalOffencesInSpeedCode = await _context.Offences
                 .Join(_context.SpeedingCategories,
                     o => o.OffenceCode,
@@ -140,6 +144,7 @@ namespace Assig1.Controllers
                 .Where(join => join.sc.SpeedCode == offence.SpeedCodeCategory)
                 .MaxAsync(join => join.o.TotalFee);
 
+            //create the view model with the queried aggregate data and specific offence details
             var vm = new Speeding_SpeedingDetail
             {
                 OffenceCode = offence.OffenceCode,
@@ -156,10 +161,11 @@ namespace Assig1.Controllers
             return View(vm);
         }
 
+        // a breakdown of all offences belonging to a specific speed code
         [HttpGet]
-        public async Task<IActionResult> SpeedCodeBreakdown(string speedCode, string sortOrder = "default")
+        public async Task<IActionResult> SpeedCodeBreakdown(string speedCode, string sortOrder = "default") 
         {
-            var query = await (
+            var query = await ( // query that connects offences to expiations, calculating counts and averages from the expiation data set
                         from o in _context.Offences
                         join e in _context.Expiations on o.OffenceCode equals e.OffenceCode
                         join sc in _context.SpeedingCategories on o.OffenceCode equals sc.OffenceCode
@@ -176,7 +182,7 @@ namespace Assig1.Controllers
                         }).OrderByDescending(d => d.OffenceCount)
                         .ToListAsync();
 
-            switch (sortOrder)
+            switch (sortOrder) // sorts query results based on user input from a drop down
             {
                 case "offence_count_asc":
                     query = query.OrderBy(d => d.OffenceCount).ToList();
@@ -201,9 +207,9 @@ namespace Assig1.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> OffenceDetails(string offenceCode, DateOnly? startDate, DateOnly? endDate)
+        public async Task<IActionResult> OffenceDetails(string offenceCode, DateOnly? startDate, DateOnly? endDate) // get details of a specific offence - specific to expiations, which contains details such as date range (which can also be used to filter results)
         {
-            var detailQuery = await (
+            var detailQuery = await ( // queries details about an offence, considering a date range
                 from o in _context.Offences
                 join e in _context.Expiations on o.OffenceCode equals e.OffenceCode
                 where o.OffenceCode == offenceCode && (!startDate.HasValue || e.IncidentStartDate >= startDate) && (!endDate.HasValue || e.IncidentStartDate <= endDate)
@@ -225,9 +231,9 @@ namespace Assig1.Controllers
                 return NotFound();
             }
 
-            var totalOffenceCount = await _context.Expiations.CountAsync();
+            var totalOffenceCount = await _context.Expiations.CountAsync(); // total count of expiations
 
-            var monthlyExpiations = await _context.Expiations
+            var monthlyExpiations = await _context.Expiations // month expiation query for the graph, dividing them by month and counting
                 .Where(e => e.OffenceCode == offenceCode)
                 .GroupBy(e => new { e.IncidentStartDate.Year, e.IncidentStartDate.Month })
                 .Select(g => new
@@ -239,6 +245,7 @@ namespace Assig1.Controllers
                 .OrderBy(g => g.Month)
                 .ToListAsync();
 
+            // create the view model
             var vm = new Offence_OffenceDetail
             {
                 OffenceCode = detailQuery.First().OffenceCode,
@@ -257,16 +264,16 @@ namespace Assig1.Controllers
             };
 
             vm.TotalExpiations = vm.Expiations.Count();
-            vm.TotalFeePaid = vm.Expiations.Sum(e => e.TotalFeeAmt ?? 0);
-            vm.Frequency = ((double)vm.TotalExpiations / totalOffenceCount) * 100;
+            vm.TotalFeePaid = vm.Expiations.Sum(e => e.TotalFeeAmt ?? 0); // getting the total fees for this offence (of all fees paid, not just one)
+            vm.Frequency = ((double)vm.TotalExpiations / totalOffenceCount) * 100; // calculates the frequency of this offence against all offences
 
-            vm.MostCommonLsaCode = detailQuery
+            vm.MostCommonLsaCode = detailQuery // gets the most common LSA code
                 .GroupBy(x => x.LsaCode)
                 .OrderByDescending(g => g.Count())
                 .Select(x => x.Key)
                 .FirstOrDefault();
 
-            vm.MostCommonState = detailQuery
+            vm.MostCommonState = detailQuery // gets the most common (driver) state
                 .GroupBy(x => x.DriverState)
                 .OrderByDescending(g => g.Count())
                 .Select(x => x.Key)

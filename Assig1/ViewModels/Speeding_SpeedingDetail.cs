@@ -18,8 +18,8 @@ namespace Assig1.ViewModels
         [Display(Name = "Demerit Points")]
         public int? DemeritPoints { get; set; }
 
-        [Display(Name = "Total Offences")]
-        public int TotalOffences { get; set; }
+        [Display(Name = "Total Offences In Same Speed Code")]
+        public int TotalOffencesInSpeedCode { get; set; }
 
         [Display(Name = "Average Demerit Points In This Offence")]
         [DisplayFormat(DataFormatString = "{0:F2}")]

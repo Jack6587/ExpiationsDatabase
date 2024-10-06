@@ -82,7 +82,7 @@
             .enter()
             .append("text")
             .attr("class", "label")
-            .attr("x", (d, i) => xScale(speedCodes[i] + xScale.bandwidth() / 2))
+            .attr("x", (d, i) => xScale(speedCodes[i]) + xScale.bandwidth() / 2)
             .attr("y", d => yScale(d) + 20)
             .attr("text-anchor", "middle")
             .attr("fill", "white")
@@ -107,7 +107,13 @@
             .attr("y", -margin.left + 15)
             .attr("x", -svgHeight / 2)
             .attr("text-anchor", "middle")
-            .text("Count");
+            .text("Number of Offences");
+
+        svg.append("text")
+            .attr("x", svgWidth / 2)
+            .attr("y", svgHeight + margin.bottom - 20)
+            .attr("text-anchor","middle")
+            .text("Speed Codes")
 
     });
 </script>

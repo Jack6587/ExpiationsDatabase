@@ -30,10 +30,9 @@ namespace Assig1.Controllers
                 .Select(group => group.First())
                 .ToList();
 
-            var offencesBySpeedCode = categories
+            vm.OffencesBySpeedCode = categories
                 .GroupBy(sc => sc.SpeedCode)
                 .ToDictionary(group => group.Key, group => group.Count(sc => _context.Offences.Any(o => o.OffenceCode == sc.OffenceCode)));
-
 
             if (!string.IsNullOrWhiteSpace(vm.SearchText) || !string.IsNullOrWhiteSpace(vm.SpeedCode) || !string.IsNullOrWhiteSpace(vm.OffenceCode))
             {
@@ -70,7 +69,6 @@ namespace Assig1.Controllers
                 vm.Offences = offences;
                 vm.CurrentPage = page;
                 vm.TotalPages = offences.PageCount;
-                vm.OffencesBySpeedCode = offencesBySpeedCode;
             }
 
             return View(vm);
@@ -111,7 +109,7 @@ namespace Assig1.Controllers
                 return NotFound();
             }
 
-            var totalOffences = await _context.Offences
+            var totalOffencesInSpeedCode = await _context.Offences
                 .Join(_context.SpeedingCategories,
                     o => o.OffenceCode,
                     sc => sc.OffenceCode,
@@ -151,7 +149,7 @@ namespace Assig1.Controllers
                 DemeritPoints = offence.DemeritPoints,
                 SectionID = offence.SectionId,
                 AverageFeePaid = averageFee,
-                TotalOffences = totalOffences,
+                TotalOffencesInSpeedCode = totalOffencesInSpeedCode,
                 AverageDemeritPoints = averageDemerit,
                 HighestFeePaid = highestFee
             };

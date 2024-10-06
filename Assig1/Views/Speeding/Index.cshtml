@@ -6,8 +6,8 @@
 </div>
 
 <form asp-controller="Speeding" asp-action="Index" method="get">
-    <div action="form-group">
-        <label for="SearchText">@Html.DisplayNameFor(m => m.SearchText)</label>
+    <div class="form-group">
+        <label for="AutoComplete">@Html.DisplayNameFor(m => m.SearchText)</label>
         <input asp-for="SearchText" id="AutoComplete" class="form-control" placeholder="Enter offence description" autocomplete="off"/>
     </div>
 

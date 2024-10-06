@@ -1,11 +1,5 @@
 ﻿@model Assig1.ViewModels.Speeding_SpeedingDetail
 
-<style>
-    .card {
-        height: 100%
-    }
-</style>
-
 <div class="container mt-4">
     <h1>@Model.Description</h1>
     <div class="row">
@@ -22,12 +16,10 @@
         })
         {
             <div class="col-md-3">
-                <div class="card mb-3">
-                    <div class="card mb-3 text-white bg-success">
-                        <div class="card-body">
-                            <h5 class="card-title">@item.Title</h5>
-                            <p class="card-text">@item.Value</p>
-                        </div>
+                <div class="card mb-4 h-100 text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">@item.Value</p>
                     </div>
                 </div>
             </div>
